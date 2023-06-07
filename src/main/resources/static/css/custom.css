@@ -1,0 +1,52 @@
+/*
+Custom Css
+*/
+.font-bold {
+    font-weight: bold;
+}
+
+.img {
+    width: 140px;
+    height: 190px;
+    object-fit: fill;
+}
+.img_big{
+    width: 310px;
+    height: 440px;
+    object-fit: fill;
+}
+
+.img_small{
+    width: 100px;
+    height: 130px;
+    object-fit: fill;
+}
+
+.img_smaller{
+    width: 80px;
+    height: 106px;
+    object-fit: fill;
+}
+
+
+.a_active {
+    background-color: #5c636a;
+    color: white;
+}
+
+.a_general {
+    color: #444145;
+}
+
+.hover:hover {
+    color: #56ae6c !important;
+}
+
+.bg_single {
+    background-color : #bebebf;
+}
+
+.border_box {
+    border: 1px solid #bebebf;
+    border-radius: 10px;
+}
