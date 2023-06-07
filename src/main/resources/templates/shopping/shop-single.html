@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Zay Shop - Product Detail Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="../../static/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../static/img/favicon.ico">
+
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/templatemo.css">
+    <link rel="stylesheet" href="../../static/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="../../static/css/fontawesome.min.css">
+
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/slick-theme.css">
+<!--
+    
+TemplateMo 559 Zay Shop
+
+https://templatemo.com/tm-559-zay-shop
+
+-->
+
+
+</head>
+
+<body>
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="../test/index.html">
+                Zay
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../test/index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.html">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Open Content -->
+    <section class="bg-white">
+        <div class="container pb-5 px-4">
+            <div class="row">
+                <div class="col-lg-3 mt-5">
+                    <div class="card mb-3">
+                        <img src="../../static/img/9788960777330.jpeg" class="img_big shadow-lg" alt="...">
+                    </div>
+                    <div class="row">
+
+
+                    </div>
+                </div>
+                <!-- col end -->
+                <div class="col-lg-9 mt-5  px-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2 fw-bold mb-4">자바 ORM 표준 JPA 프레임워크</h1>
+                            <h2 class="h3 fw-lighter fs-3 mb-4">스프링 데이터 예제 프로젝트로 배우는 전자정부 표준 데이터베이스 프레임워크</h2>
+                            <div >
+                                <ul class="list-inline  m-auto">
+                                    <li class="list-inline-item ">
+                                        <h6>출판사:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="">에이콘 출판사</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="list-inline m-auto ">
+                                    <li class="list-inline-item ">
+                                        <h6>출간일:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="">2022.07.10</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="list-inline m-auto ">
+                                    <li class="list-inline-item ">
+                                        <h6>저자:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="">김영한</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="list-inline m-auto ">
+                                    <li class="list-inline-item ">
+                                        <h6>ISBN:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="">979-11-6175-427-7</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4">
+                                <ul class="list-inline m-auto ">
+                                    <li class="list-inline-item ">
+                                        <h6>쪽수:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="">734<span>쪽</span></p>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <p class="h3 fw-bold fs-3">15000원</p>
+
+
+                            <form action="" method="GET">
+                                <input type="hidden" name="product-title" value="Activewear">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <ul class="list-inline pb-3">
+                                            <li class="list-inline-item text-right">
+                                                수량
+                                                <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                            </li>
+                                            <li class="list-inline-item"><span class="btn-sm btn-outline-secondary " id="btn-minus">-</span></li>
+                                            <li class="list-inline-item"><span class="badge bg-success" id="var-value">1</span></li>
+                                            <li class="list-inline-item"><span class="btn-sm btn-outline-secondary" id="btn-plus">+</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row pb-3">
+                                    <div class="col d-grid">
+                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">바로구매</button>
+                                    </div>
+                                    <div class="col d-grid">
+                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">장바구니</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Close Content -->
+
+    <!-- Start Article -->
+    <section class="py-2">
+        <div class="container  border-light">
+            <div class="row text-left ">
+                <h4>목차</h4>
+            </div>
+            <hr class="shadow-lg">
+            <p>
+                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    목차 펼치기
+                </button>
+            </p>
+            <div class="collapse border p-5" id="collapseExample">
+                <p class="" style="white-space: pre-line; ">
+                    목차
+
+                    1장. JPA 소개
+
+                    1.1 SQL과 문제점
+                    1.1.1 반복, 반복 그리고 반복
+                    1.1.2 SQL에 의존적인 개발
+                    1.1.3 JPA와 문제 해결
+                    1.2 패러다임의 불일치
+                    1.2.1 상속
+                    1.2.2 연관관계
+                    1.2.3 객체 그래프 탐색
+                    1.2.4 비교
+                    1.2.5 정리
+                    1.3 JPA란 무엇일까?
+                    1.3.1 JPA 소개
+                    1.3.2 왜 JPA를 사용해야 하는가?
+                    1.4 정리
+
+                    2장. JPA 시작
+                    2.1 이클립스 설치와 프로젝트 불러오기
+                    2.2 H2 데이터베이스 설치
+                    2.3 라이브러리와 프로젝트 구조
+                    2.3.1 메이븐과 사용 라이브러리 관리
+                    2.4 객체 매핑 시작
+                    2.5 persistence.xml 설정
+                    2.5.1 데이터베이스 방언
+                    2.6 애플리케이션 개발
+                    2.6.1 엔티티 매니저 설정
+                    2.6.2 트랜잭션 관리
+                    2.6.3 비즈니스 로직
+                    2.6.4 JPQL
+                    2.7 정리
+
+                    3장. 영속성 관리
+                    3.1 엔티티 매니저 팩토리와 엔티티 매니저
+                    3.2 영속성 컨텍스트란?
+                    3.3 엔티티의 생명주기
+                    3.4 영속성 컨텍스트의 특징
+                    3.4.1 엔티티 조회
+                    3.4.2 엔티티 등록
+                    3.4.3 엔티티 수정
+                    3.4.4 엔티티 삭제
+                    3.5 플러시
+                    3.5.1 플러시 모드 옵션
+                    3.6 준영속
+                    3.6.1 엔티티를 준영속 상태로 전환: detach( )
+                    3.6.2 영속성 컨텍스트 초기화: clear( )
+                    3.6.3 영속성 컨텍스트 종료: close( )
+                    3.6.4 준영속 상태의 특징
+                    3.6.5 병합: merge( )
+                    3.7 정리
+
+                    4장. 엔티티 매핑
+                    4.1 @Entity
+                    4.2 @Table
+                    4.3 다양한 매핑 사용
+                    4.4 데이터베이스 스키마 자동 생성
+                    4.5 DDL 생성 기능
+                    4.6 기본 키 매핑
+                    4.6.1 기본 키 직접 할당 전략
+                    4.6.2 IDENTITY 전략
+                    4.6.3 SEQUENCE 전략
+                    4.6.4 TABLE 전략
+                    4.6.5 AUTO 전략
+                    4.6.6 기본 키 매핑 정리
+                    4.7 필드와 컬럼 매핑: 레퍼런스
+                    4.7.1 @Column
+                    4.7.2 @Enumerated
+                    4.7.3 @Temporal
+                    4.7.4 @Lob
+                    4.7.5 @Transient
+                    4.7.6 @Access
+                    4.8 정리
+
+                    실전 예제 1. 요구사항 분석과 기본 매핑
+                    __요구사항 분석
+                    __도메인 모델 분석
+                    __테이블 설계
+                    __엔티티 설계와 매핑
+                    __데이터 중심 설계의 문제점
+
+                    5장. 연관관계 매핑 기초
+                    5.1 단방향 연관관계
+                    5.1.1 순수한 객체 연관관계
+                    5.1.2 테이블 연관관계
+                    5.1.3 객체 관계 매핑
+                    5.1.4 @JoinColumn
+                    5.1.5 @ManyToOne
+                    5.2 연관관계 사용
+                    5.2.1 저장
+                    5.2.2 조회
+                    5.2.3 수정
+                    5.2.4 연관관계 제거
+                    5.2.5 연관된 엔티티 삭제
+                    5.3 양방향 연관관계
+                    5.3.1 양방향 연관관계 매핑
+                    5.3.2 일대다 컬렉션 조회
+                    5.4 연관관계의 주인
+                    5.4.1 양방향 매핑의 규칙: 연관관계의 주인
+                    5.4.2 연관관계의 주인은 외래 키가 있는 곳
+                    5.5 양방향 연관관계 저장
+                    5.6 양방향 연관관계의 주의점
+                    5.6.1 순수한 객체까지 고려한 양방향 연관관계
+                    5.6.2 연관관계 편의 메소드
+                    5.6.3 연관관계 편의 메소드 작성 시 주의사항
+                    5.7 정리
+
+                    실전 예제 2. 연관관계 매핑 시작
+                    __일대다, 다대일 연관관계 매핑
+                    __객체 그래프 탐색
+
+                    6장. 다양한 연관관계 매핑
+                    6.1 다대일
+                    6.1.1 다대일 단방향 [N:1]
+                    6.1.2 다대일 양방향 [N:1, 1:N]
+                    6.2 일대다
+                    6.2.1 일대다 단방향 [1:N]
+                    6.2.2 일대다 양방향 [1:N, N:1]
+                    6.3 일대일 [1:1]
+                    6.3.1 주 테이블에 외래 키
+                    6.3.2 대상 테이블에 외래 키
+                    6.4 다대다 [N:N]
+                    6.4.1 다대다: 단방향
+                    6.4.2 다대다: 양방향
+                    6.4.3 다대다: 매핑의 한계와 극복, 연결 엔티티 사용
+                    6.4.4 다대다: 새로운 기본 키 사용
+                    6.4.5 다대다 연관관계 정리
+                    6.5 정리
+
+                    실전 예제 3. 다양한 연관관계 매핑
+                    __일대일 매핑
+                    __다대다 매핑
+
+                    7장. 고급 매핑
+                    7.1 상속 관계 매핑
+                    7.1.1 조인 전략
+                    7.1.2 단일 테이블 전략
+                    7.1.3 구현 클래스마다 테이블 전략
+                    7.2 @MappedSuperclass
+                    7.3 복합 키와 식별 관계 매핑
+                    7.3.1 식별 관계 vs 비식별 관계
+                    7.3.2 복합 키: 비식별 관계 매핑
+                    7.3.3 복합 키: 식별 관계 매핑
+                    7.3.4 비식별 관계로 구현
+                    7.3.5 일대일 식별 관계
+                    7.3.6 식별, 비식별 관계의 장단점
+                    7.4 조인테이블
+                    7.4.1 일대일 조인테이블
+                    7.4.2 일대다 조인테이블
+                    7.4.3 다대일 조인테이블
+                    7.4.4 다대다 조인테이블
+                    7.5 엔티티 하나에 여러 테이블 매핑
+                    7.6 정리
+
+                    실전 예제 4. 상속 관계 매핑
+                    __상속 관계 매핑
+                    __@MappedSuperclass 매핑
+
+                    8장. 프록시와 연관관계 관리
+                    8.1 프록시
+                    8.1.1 프록시 기초
+                    8.1.2 프록시와 식별자
+                    8.1.3 프록시 확인
+                    8.2 즉시 로딩과 지연 로딩
+                    8.2.1 즉시 로딩
+                    8.2.2 지연 로딩
+                    8.2.3 즉시 로딩, 지연 로딩 정리
+                    8.3 지연 로딩 활용
+                    8.3.1 프록시와 컬렉션 래퍼
+                    8.3.2 JPA 기본 페치 전략
+                    8.3.3 컬렉션에 FetchType.EAGER 사용 시 주의점
+                    8.4 영속성 전이 - CASCADE
+                    8.4.1 영속성 전이: 저장
+                    8.4.2 영속성 전이: 삭제
+                    8.4.3 CASCADE의 종류
+                    8.5 고아 객체
+                    8.6 영속성 전이 + 고아 객체, 생명주기
+                    8.7 정리
+
+                    실전 예제 5. 연관관계 관리
+                    __글로벌 페치 전략 설정
+                    __영속성 전이 설정
+
+                    9장. 값 타입
+                    9.1 기본값 타입
+                    9.2 임베디드 타입(복합 값 타입)
+                    9.2.1 임베디드 타입과 테이블 매핑
+                    9.2.2 임베디드 타입과 연관관계
+                    9.2.3 @AttributeOverride: 속성 재정의
+                    9.2.4 임베디드 타입과 null
+                    9.3. 값 타입과 불변 객체
+                    9.3.1 값 타입 공유 참조
+                    9.3.2 값 타입 복사
+                    9.3.3 불변 객체
+                    9.4. 값 타입의 비교
+                    9.5. 값 타입 컬렉션
+                    9.5.1 값 타입 컬렉션 사용
+                    9.5.2 값 타입 컬렉션의 제약사항
+                    9.6 정리
+
+                    실전 예제 6. 값 타입 매핑
+                    __실전 예제 정리
+
+                    10장. 객체지향 쿼리 언어
+                    10.1 객체지향 쿼리 소개
+                    10.1.1 JPQL 소개
+                    10.1.2 Criteria 쿼리 소개
+                    10.1.3 QueryDSL 소개
+                    10.1.4 네이티브 SQL 소개
+                    10.1.5 JDBC 직접 사용, 마이바티스 같은 SQL 매퍼 프레임워크 사용
+                    10.2 JPQL
+                    10.2.1 기본 문법과 쿼리 API
+                    10.2.2 파라미터 바인딩
+                    10.2.3 프로젝션
+                    10.2.4 페이징 API
+                    10.2.5 집합과 정렬
+                    10.2.6 JPQL 조인
+                    10.2.7 페치 조인
+                    10.2.8 경로 표현식
+                    10.2.9 서브 쿼리
+                    10.2.10 조건식
+                    10.2.11 다형성 쿼리
+                    10.2.12 사용자 정의 함수 호출(JPA 2.1)
+                    10.2.13 기타 정리
+                    10.2.14 엔티티 직접 사용
+                    10.2.15 Named 쿼리: 정적 쿼리
+                    10.3 Criteria
+                    10.3.1 Criteria 기초
+                    10.3.2 Criteria 쿼리 생성
+                    10.3.3 조회
+                    10.3.4 집합
+                    10.3.5 정렬
+                    10.3.6 조인
+                    10.3.7 서브 쿼리
+                    10.3.8 IN 식
+                    10.3.9 CASE 식
+                    10.3.10 파라미터 정의
+                    10.3.11 네이티브 함수 호출
+                    10.3.12 동적 쿼리
+                    10.3.13 함수 정리
+                    10.3.14 Criteria 메타 모델 API
+                    10.4 QueryDSL
+                    10.4.1 QueryDSL 설정
+                    10.4.2 시작
+                    10.4.3 검색 조건 쿼리
+                    10.4.4 결과 조회
+                    10.4.5 페이징과 정렬
+                    10.4.6 그룹
+                    10.4.7 조인
+                    10.4.8 서브 쿼리
+                    10.4.9 프로젝션과 결과 반환
+                    10.4.10 수정, 삭제 배치 쿼리
+                    10.4.11 동적 쿼리
+                    10.4.12 메소드 위임
+                    10.4.13 QueryDSL 정리
+                    10.5 네이티브 SQL
+                    10.5.1 네이티브 SQL 사용
+                    10.5.2 Named 네이티브 SQL
+                    10.5.3 네이티브 SQL XML 에 정의
+                    10.5.4 네이티브 SQL 정리
+                    10.5.5 스토어드 프로시저(JPA 2.1)
+                    10.6 객체지향 쿼리 심화
+                    10.6.1 벌크 연산
+                    10.6.2 영속성 컨텍스트와 JPQL
+                    10.6.3 JPQL과 플러시 모드
+                    10.7 정리
+
+                    11장. 웹 애플리케이션 제작
+                    11.1 프로젝트 환경설정
+                    11.1.1 프로젝트 구조
+                    11.1.2 메이븐과 사용 라이브러리 관리
+                    11.1.3 스프링 프레임워크 설정
+                    11.2 도메인 모델과 테이블 설계
+                    11.2.1 요구사항 분석
+                    11.2.2 도메인 모델 설계
+                    11.2.3 테이블 설계
+                    11.2.4 연관관계 정리
+                    11.2.5 엔티티 클래스
+                    11.3 애플리케이션 구현
+                    11.3.1 개발 방법
+                    11.3.2 회원 기능
+                    11.3.3 상품 기능
+                    11.3.4 주문 기능
+                    11.3.5 웹 계층 구현
+                    11.4 정리
+
+                    12장. 스프링 데이터 JPA
+                    12.1 스프링 데이터 JPA 소개
+                    12.1.1 스프링 데이터 프로젝트
+                    12.2 스프링 데이터 JPA 설정
+                    12.3 공통 인터페이스 기능
+                    12.4 쿼리 메소드 기능
+                    12.4.1 메소드 이름으로 쿼리 생성
+                    12.4.2 JPA NamedQuery
+                    12.4.3 @Query, 리파지토리 메소드에 쿼리 정의
+                    12.4.4 파라미터 바인딩
+                    12.4.5 벌크성 수정 쿼리
+                    12.4.6 반환 타입
+                    12.4.7 페이징과 정렬
+                    12.4.8 힌트
+                    12.4.9 Lock
+                    12.5 Specifications(명세)
+                    12.6 사용자 정의 리파지토리 구현
+                    12.7 Web 확장
+                    12.7.1 설정
+                    12.7.2 도메인 클래스 컨버터 기능
+                    12.7.3 페이징과 정렬 기능
+                    12.8 스프링 데이터 JPA가 사용하는 구현체
+                    12.9 JPA 샵에 적용
+                    12.9.1 환경 설정
+                    12.9.2 리파지토리 리팩토링
+                    12.9.3 명세 적용
+                    12.10 스프링 데이터 JPA와 QueryDSL 통합
+                    12.10.1 QueryDslPredicateExecutor 사용
+                    12.10.3 QueryDslRepositorySupport 사용
+                    12.11 정리
+
+                    13장. 웹 애플리케이션과 영속성 관리
+                    13.1 트랜잭션 범위의 영속성 컨텍스트
+                    13.1.1 스프링 컨테이너의 기본 전략
+                    13.2 준영속 상태와 지연 로딩
+                    13.2.1 글로벌 페치 전략 수정
+                    13.2.2 JPQL 페치 조인
+                    13.2.3 강제로 초기화
+                    13.2.4 FACADE 계층 추가
+                    13.2.5 준영속 상태와 지연 로딩의 문제점
+                    13.3 OSIV
+                    13.3.1 과거 OSIV: 요청 당 트랜잭션
+                    13.3.2 스프링 OSIV: 비즈니스 계층 트랜잭션
+                    13.3.3 OSIV 정리
+                    13.4 너무 엄격한 계층
+                    13.5 정리
+
+                    14장. 컬렉션과 부가 기능
+                    14.1 컬렉션
+                    14.1.1 JPA와 컬렉션
+                    14.1.2 Collection, List
+                    14.1.3 Set
+                    14.1.4 List + @OrderColumn
+                    14.1.5 @OrderBy
+                    14.2 @Converter
+                    14.2.1 글로벌 설정
+                    14.3 리스너
+                    14.3.1 이벤트 종류
+                    14.3.2 이벤트 적용 위치
+                    14.4 엔티티 그래프
+                    14.4.1 Named 엔티티 그래프
+                    14.4.2 em.find( )에서 엔티티 그래프 사용
+                    14.4.3 subgraph
+                    14.4.4 JPQL에서 엔티티 그래프 사용
+                    14.4.5 동적 엔티티 그래프
+                    14.4.6 엔티티 그래프 정리
+                    14.5 정리
+
+                    15장. 고급 주제와 성능 최적화
+                    15.1 예외 처리
+                    15.1.1 JPA 표준 예외 정리
+                    15.1.2 스프링 프레임워크의 JPA 예외 변환
+                    15.1.3 스프링 프레임워크에 JPA 예외 변환기 적용
+                    15.1.4 트랜잭션 롤백 시 주의사항
+                    15.2 엔티티 비교
+                    15.2.1 영속성 컨텍스트가 같을 때 엔티티 비교
+                    15.2.2 영속성 컨텍스트가 다를 때 엔티티 비교
+                    15.3 프록시 심화 주제
+                    15.3.1 영속성 컨텍스트와 프록시
+                    15.3.2 프록시 타입 비교
+                    15.3.3 프록시 동등성 비교
+                    15.3.4 상속관계와 프록시
+                    15.4 성능 최적화
+                    15.4.1 N+1 문제
+                    15.4.2 읽기 전용 쿼리의 성능 최적화
+                    15.4.3 배치 처리
+                    15.4.4 SQL 쿼리 힌트 사용
+                    15.4.5 트랜잭션을 지원하는 쓰기 지연과 성능 최적화
+                    15.5 정리
+
+                    16장. 트랜잭션과 락, 2차 캐시
+                    16.1 트랜잭션과 락
+                    16.1.1 트랜잭션과 격리 수준
+                    16.1.2 낙관적 락과 비관적 락 기초
+                    16.1.3 @Version
+                    16.1.4 JPA 락 사용
+                    16.1.5 JPA 낙관적 락
+                    16.1.6 JPA 비관적 락
+                    16.1.7 비관적 락과 타임아웃
+                    16.2 2차 캐시
+                    16.2.1 1차 캐시와 2차 캐시
+                    16.2.2 JPA 2차 캐시 기능
+                    16.2.3 하이버네이트와 EHCACHE 적용
+                    16.3 정리
+                </p>
+            </div>
+        </div>
+
+    </section>
+    <!-- End Article -->
+
+
+    <!-- Start Footer -->
+    <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Zay Shop</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            123 Consectetur at ligula 10660
+                        </li>
+                        <li>
+                            <i class="fa fa-phone fa-fw"></i>
+                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
+                        <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
+                        <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
+                        <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
+                        <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#">Home</a></li>
+                        <li><a class="text-decoration-none" href="#">About Us</a></li>
+                        <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
+                        <li><a class="text-decoration-none" href="#">FAQs</a></li>
+                        <li><a class="text-decoration-none" href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row text-light mb-4">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="subscribeEmail">Email address</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
+                        <div class="input-group-text btn-success text-light">Subscribe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-100 bg-black py-3">
+            <div class="container">
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <p class="text-left text-light">
+                            Copyright &copy; 2021 Company Name 
+                            | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <!-- End Footer -->
+
+    <!-- Start Script -->
+    <script src="../../static/js/jquery-1.11.0.min.js"></script>
+    <script src="../../static/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/js/templatemo.js"></script>
+    <script src="../../static/js/custom.js"></script>
+    <!-- End Script -->
+
+    <!-- Start Slider Script -->
+    <script src="../../static/js/slick.min.js"></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                }
+            ]
+        });
+    </script>
+    <!-- End Slider Script -->
+
+</body>
+
+</html>
