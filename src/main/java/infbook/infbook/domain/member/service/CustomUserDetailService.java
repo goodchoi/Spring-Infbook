@@ -20,16 +20,16 @@ import java.util.Optional;
 public class CustomUserDetailService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-    private final ShoppingCartRepository shoppingCartRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Member> optionalFindMember = memberRepository.findByAccountId(username);
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        Optional<Member> optionalFindMember = memberRepository.findByAccountId(userId);
 
-        Member findMember = optionalFindMember.orElseThrow(() -> new UsernameNotFoundException(username));
+        Member findMember = optionalFindMember.orElseThrow(() -> new UsernameNotFoundException("id없음."));
 
         CustomUserDetails details = new CustomUserDetails(findMember);
-        log.info("created userDetails {}" , details.getMember().getName());
         return details;
     }
+
+
 }
