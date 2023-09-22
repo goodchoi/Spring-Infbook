@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout.html}">
+
+
+<head>
+    <title layout:fragment="title">에러404</title>
+</head>
+
+<section>
+    <th:block layout:fragment="content">
+        <main class="error_bos ">
+           <div class="text-center ">
+               <span style="font-size:7.6em;" class="hanna">404</span><br>
+               <span class="fs-2 fw-light">찾으시는 페이지가 없습니다.</span><br>
+               <img src="/img/404img.gif" class="mt-5" width="200"><br>
+               <a href="/">
+                   <button type="button" class="btn-lg btn-secondary mt-3">홈으로 </button>
+               </a>
+           </div>
+        </main>
+    </th:block>
+</section>
+</html>
