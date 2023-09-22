@@ -1,6 +1,13 @@
 /*
 Custom Css
 */
+
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
+.hanna{
+    font-family: 'Hanna', fantasy;
+}
+
 .font-bold {
     font-weight: bold;
 }
@@ -8,6 +15,22 @@ Custom Css
 .img {
     width: 140px;
     height: 190px;
+    object-fit: fill;
+}
+
+.container_custom {
+    margin-right: auto;
+    margin-left: auto;
+    width: 1450px;
+}
+
+.opacity {
+    opacity: 0.5;
+}
+
+.img_list {
+    width: 110px;
+    height: 150px;
     object-fit: fill;
 }
 .img_big{
@@ -20,6 +43,10 @@ Custom Css
     width: 100px;
     height: 130px;
     object-fit: fill;
+}
+
+.pointer_cur{
+    cursor: pointer;
 }
 
 .img_smaller{
@@ -42,6 +69,10 @@ Custom Css
     color: #56ae6c !important;
 }
 
+.selected {
+    color: #56ae6c !important;
+}
+
 .bg_single {
     background-color : #bebebf;
 }
@@ -49,4 +80,30 @@ Custom Css
 .border_box {
     border: 1px solid #bebebf;
     border-radius: 10px;
+}
+
+.border_box2 {
+    border: 1px solid gray;
+    border-radius: 10px;
+    height: 210px;
+    background-color: white;
+    width: 330px;
+    text-align: center;
+}
+
+.cur {
+    cursor: pointer;!important;
+}
+
+.error {
+    color: #dc0a1f;
+    border-color:#dc0a1f ;
+    font-size: 11pt !important;
+}
+
+
+.success {
+    color: #56ae6c;
+    border-color:#dc0a1f ;
+    font-size: 11pt !important;
 }

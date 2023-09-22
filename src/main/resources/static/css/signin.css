@@ -4,13 +4,14 @@
 
 .form-signin {
   width: 100%;
-  margin-top: 100px;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   max-width:330px;
   padding: 15px;
   background-color: white;
   border-radius: 10px;
+  margin-bottom: 300px;
 }
 
 .form-signin .checkbox {
@@ -31,4 +32,15 @@
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.error_bos {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width:600px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 300px;
 }
