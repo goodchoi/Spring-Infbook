@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout.html}">
+
+
+<head>
+    <title layout:fragment="title">주문 완료</title>
+</head>
+
+<section>
+    <th:block layout:fragment="content">
+        <main class="error_bos ">
+           <div class="text-center ">
+               <span class="hanna" style="font-size:7.6em;" >주문 완료</span><br>
+               <span class="fs-2 fw-light">주문이 성공적으로 처리되었습니다.</span><br>
+               <img>
+               <a href="/">
+                   <button type="button" class="btn-lg btn-secondary mt-3">홈으로 </button>
+               </a>
+           </div>
+        </main>
+    </th:block>
+</section>
+</html>

@@ -1,6 +1,7 @@
 package infbook.infbook.domain.order.domain;
 
 import infbook.infbook.domain.item.domain.Item;
+import infbook.infbook.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,10 +10,11 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Table(name = "order_items")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderItem {
+public class OrderItem extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
     private Long id;
 
@@ -24,6 +26,7 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @Column(nullable = false,updatable = false)
     private int quantity;
 
     @Builder

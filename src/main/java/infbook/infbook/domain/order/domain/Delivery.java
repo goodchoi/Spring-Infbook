@@ -1,23 +1,23 @@
 package infbook.infbook.domain.order.domain;
 
 import infbook.infbook.domain.model.Address;
+import infbook.infbook.global.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Delivery {
+public class Delivery extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_id")
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private DeliveryStatus deliveryStatus;
+
 
     @Embedded
     private Address address;
@@ -26,5 +26,9 @@ public class Delivery {
     public Delivery(DeliveryStatus deliveryStatus, Address address) {
         this.deliveryStatus = deliveryStatus;
         this.address = address;
+    }
+
+    public void completedPayment() {
+        this.deliveryStatus = DeliveryStatus.READY;
     }
 }
