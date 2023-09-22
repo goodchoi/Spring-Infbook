@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/adminlayout.html}">
+
+<head>
+    <title layout:fragment="title">관리자 홈</title>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+
+
+<th:block layout:fragment="content">
+    <div class="w-75 container py-4">
+        <header class="pb-3 mb-4 border-bottom">
+            <span class="fs-4 fw-bold">관리자 페이지</span>
+        </header>
+
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-md py-5 text-center">
+                <h1>infbook</h1>
+
+                <p class="lead">상품 기능</p>
+                <p>
+                    <a class="btn btn-lg fw-normal fs-5 btn-dark" href="/admin/item/insert">상품 등록</a>
+                    <a class="btn btn-lg fw-normal fs-5 btn-dark" href="/admin/item">상품 목록</a>
+                </p>
+                <p class="lead">주문 기능</p>
+                <p>
+                    <a class="btn btn-lg fw-normal fs-5 btn-info"  href="/admin/orders">주문 내역</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</html>
