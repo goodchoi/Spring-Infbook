@@ -1,12 +1,10 @@
-package infbook.infbook.domain.item.domain;
+package infbook.infbook.domain.item.dto;
 
 
 import infbook.infbook.domain.category.domain.Category;
-import jakarta.validation.constraints.*;
+import infbook.infbook.domain.item.domain.Item;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -15,52 +13,41 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
-public class ItemSaveDto {
+public class ItemUpdateFormDto {
+
+    private Long id;
 
     private MultipartFile attachedImage;
 
-    @NotEmpty
+    private String fileName;
+
     private String name;
 
-    @NotEmpty
     private String publisher;
 
-    @NotEmpty
     private String author;
 
-    @NotBlank
     private String isbn;
 
-    @NotNull
-    @DateTimeFormat(pattern = "yyyyMMdd")
     private LocalDate publicationDate;
 
-    @NotNull
-    @Min(0)
     private Integer pageNumber;
 
-    @NotNull
-    @Min(1000)
     private Integer price;
 
-    @NotNull
     private Long categoryId;
 
-    @Builder.Default
-    @Size(min = 1)
     private List<Long> subCategories = new ArrayList<>();
 
-    @NotEmpty
     private String index;
 
-    @NotNull
-    @Min(0)
     private Integer stockQuantity;
 
     @Builder
-    public ItemSaveDto(MultipartFile attachedImage, String name, String publisher, String author, String isbn, LocalDate publicationDate, Integer pageNumber, Integer price, Long categoryId, List<Long> subCategories, String index, Integer stockQuantity) {
+    public ItemUpdateFormDto(Long id, String fileName, String name, String publisher, String author, String isbn, LocalDate publicationDate, Integer pageNumber, Integer price, Long categoryId, List<Long> subCategories, String index, Integer stockQuantity) {
 
-        this.attachedImage = attachedImage;
+        this.id = id;
+        this.fileName = fileName;
         this.name = name;
         this.publisher = publisher;
         this.author = author;
@@ -78,7 +65,7 @@ public class ItemSaveDto {
         this.stockQuantity = stockQuantity;
     }
 
-    public Item getSaveItem(Category refCategory) {
+    public Item getUpdateItemDto(Category refCategory) {
         return Item.builder()
                 .name(this.name)
                 .isbn(this.getIsbn())

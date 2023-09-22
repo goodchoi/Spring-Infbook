@@ -1,7 +1,11 @@
 package infbook.infbook.domain.item.controller;
 
 import infbook.infbook.domain.item.domain.*;
-import infbook.infbook.domain.item.service.ItemService;
+import infbook.infbook.domain.item.dto.ItemAdminDto;
+import infbook.infbook.domain.item.dto.ItemSaveDto;
+import infbook.infbook.domain.item.dto.ItemUpdateDto;
+import infbook.infbook.domain.item.dto.ItemUpdateFormDto;
+import infbook.infbook.domain.item.service.ItemAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -20,7 +24,7 @@ import java.util.ArrayList;
 @Controller
 public class ItemAdminController {
 
-    private final ItemService itemService;
+    private final ItemAdminService itemService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String adminHome() {
@@ -65,7 +69,7 @@ public class ItemAdminController {
     /**
      * 수정은 정책적으로
      * 이미지,가격,수량,카테고리,하위카테고리로 제한한다.
-     * <p>
+     *
      * 아이템 수정시 주의할 점
      * 1. 하위 카테고리 변경시 새로운 하위카테고리 - 아이템 엔티티객체 생성 해야함. 변경된 기존 하위카테고리 - 아이템 엔티티객체 삭제
      * 2.

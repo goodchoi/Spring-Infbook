@@ -1,4 +1,4 @@
-package infbook.infbook.domain.item.domain;
+package infbook.infbook.domain.item.dto;
 
 
 import infbook.infbook.domain.category.domain.Category;
@@ -24,9 +24,8 @@ public class ItemUpdateDto {
     @NotNull
     private Long categoryId;
 
-    @Builder.Default
     @Size(min = 1)
-    private List<Long> subCategories = new ArrayList<>();
+    private List<Long> subCategories ;
 
 
     @NotNull

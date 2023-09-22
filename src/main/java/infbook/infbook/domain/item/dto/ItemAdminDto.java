@@ -1,6 +1,7 @@
-package infbook.infbook.domain.item.domain;
+package infbook.infbook.domain.item.dto;
 
 
+import infbook.infbook.domain.item.domain.Item;
 import lombok.Builder;
 import lombok.Data;
 
