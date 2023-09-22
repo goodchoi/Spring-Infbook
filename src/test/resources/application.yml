@@ -7,25 +7,16 @@ spring:
     username: infbook
     password: dev
     driver-class-name: com.mysql.cj.jdbc.Driver
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      exclude: static/img/items/**
-      enabled: false
-  thymeleaf:
-    cache: false
-    encoding: UTF-8
+
   messages:
     basename: messages, errors
 
-  profiles:
-    active: dev,test
   sql:
     init:
       schema-locations: classpath*:db/mysql/schema.sql
       mode: always
-
+  profiles:
+    active: dev,test
   jpa:
     hibernate:
       ddl-auto: none
@@ -35,9 +26,6 @@ spring:
         format_sql: true
         use_sql_comments: true
         show_sql: true
-    #generate-ddl: false
-    #defer-datasource-initialization: true #하이버네이트
-
 
   decorator:
     datasource:
