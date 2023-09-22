@@ -6,7 +6,7 @@ import infbook.infbook.domain.category.repository.CategoryRepository;
 import infbook.infbook.domain.category.repository.SubCategoryItemRepository;
 import infbook.infbook.domain.category.repository.SubCategoryRepository;
 import infbook.infbook.domain.item.domain.Item;
-import infbook.infbook.domain.item.domain.ItemSaveDto;
+import infbook.infbook.domain.item.dto.ItemSaveDto;
 import infbook.infbook.domain.item.repository.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -16,12 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -45,7 +43,7 @@ class ItemServiceTest {
     SubCategoryItemRepository subCategoryItemRepository;
 
     @InjectMocks
-    ItemService itemService;
+    ItemAdminService itemService;
 
 
     @Test

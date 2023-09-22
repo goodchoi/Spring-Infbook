@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title layout:fragment="title">상품 목록 - 카테고리</title>
+    <th:block layout:fragment="csrf">
+        <meta name="_csrf" th:content="${_csrf?.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
+    </th:block>
+    <script>
+        function submitFormbyPage(page) {
+            $('#page').val(page)
+            $('#pageable').submit()
+        }
+
+        function submitForm() {
+            $('#pageable').submit()
+        }
+    </script>
+    <script src="/js/shoppingcart.js"></script>
+
+</head>
+
+<!-- Start Content -->
+<th:block layout:fragment="content">
+    <div class="container py-5">
+        <div class="row">
+            <!--좌측 카테고리-->
+            <div class="col-lg-3">
+                <h1 class="h2 pb-4 mx-4">카테고리</h1>
+                <div class="accordion  accordion-flush mx-4" id="accordion">
+                    <div class="accordion-item " th:each="cate, cateStat : ${categories}">
+                        <h2 class="accordion-header" th:id="'heading'+${cateStat.count}">
+                            <button class="accordion-button text-secondary border-0 collapsed" type="button"
+                                    data-bs-toggle="collapse" aria-expanded="false"
+                                    th:attr="aria-controls='collapse' + ${cateStat.count},data-bs-target='#collapse' + ${cateStat.count}"
+                                    th:text="${cate.name}">
+                                백엔드
+                            </button>
+                        </h2>
+                        <div th:id="'collapse' + ${cateStat.count}" class="accordion-collapse collapse border-0 "
+                             data-bs-parent="#accordion"
+                             th:attr="aria-labelledby='heading' + ${cateStat.count}"
+                             th:each="subcate : ${cate.children}"
+                             th:classappend="${category == cate.engName} ? 'show'">
+                            <ul class="accordion-body list-unstyled pl-3 text-center mt-4 ">
+                                <li><a class="hover text-decoration-none  text-dark"
+                                       th:href="@{{param1}/{param2}(param1=${cate.getEngName()} , param2=${subcate.getEngName()})}"
+                                       th:text="${subcate.name}">자바</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 ">
+                <!--현재 카테고리-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="fs-2 fw-bold" th:text="${categoryKorName}">백엔드</span>
+                    </div>
+                </div>
+                <!--현재 카테고리-->
+
+                <form id="pageable" method="get">  <!-- 책 검색 폼-->
+                    <!--정렬 조건-->
+                    <div class="mb-5 ">
+                        <div class="p-4 " style="border-radius: 13px; background-color: #f2eff3">
+                            <div class="row">
+                                <div class="col-md-2 offset-md-7">
+                                    <select class="form-select" name="sort" id="sort" onchange="submitForm()">
+                                        <option value="newest" th:selected="${pageSort == 'newest'}">최신순</option>
+                                        <option value="popular" th:selected="${pageSort == 'popular'}">판매순</option>
+                                        <option value="highprice" th:selected="${pageSort == 'highprice'}">높은 가격순
+                                        </option>
+                                        <option value="lowprice" th:selected="${pageSort == 'lowprice'}">낮은가격순</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 w-auto">
+                                    <select class="form-select" name="size" id="size" onchange="submitForm()">
+                                        <option value="5" th:selected="${5 == page.getPageable().pageSize}">5개씩 보기
+                                        </option>
+                                        <option value="10" th:selected="${10 == page.getPageable().pageSize}">10개씩 보기
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--정렬 조건-->
+
+                    <!--페이징 처리-->
+                    <div class="row">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <li class="page-item" th:if="${page.getPageable().pageNumber / 5 != 0}">
+                                    <button type="button" class="page-link text-secondary px-2"
+                                            th:attr="page=${(page.getPageable().pageNumber/5 -1)*5 + 4}"
+                                            onclick="submitFormbyPage(this.getAttribute('page'))">이전
+                                    </button>
+                                </li>
+                                <th:block th:if = "${page.getNumberOfElements() > 1}">
+                                    <th:block th:if="${(page.getTotalPages()-1) /5 == page.getPageable().pageNumber / 5}">
+                                        <li class="page-item"
+                                            th:each="num : ${#numbers.sequence((page.getPageable().pageNumber/5)*5 + 1
+                                        ,(page.getPageable().pageNumber/5)*5 + page.getTotalPages() % 5)}">
+                                            <button type="button" class="page-link text-secondary "
+                                                    th:classappend="${page.getPageable().pageNumber + 1 == num} ? 'bg-light'"
+                                                    th:attr="page = ${num - 1}" th:text="${num}"
+                                                    onclick="submitFormbyPage(this.getAttribute('page'))">
+                                            </button>
+                                        </li>
+                                    </th:block>
+                                    <th:block
+                                            th:unless="${(page.getTotalPages()-1) /5 == page.getPageable().pageNumber / 5}">
+                                        <li class="page-item"
+                                            th:each="num : ${#numbers.sequence((page.getPageable().pageNumber/5)*5 + 1
+                                        ,(page.getPageable().pageNumber/5)*5 + 5)}">
+                                            <button type="button" class="page-link text-secondary "
+                                                    th:classappend="${page.getPageable().pageNumber + 1 == num} ? 'bg-light'"
+                                                    th:attr="page=${num - 1}" th:text="${num}"
+                                                    onclick="submitFormbyPage(this.getAttribute('page'))">
+                                            </button>
+                                        </li>
+                                    </th:block>
+                                </th:block>
+                                <li class="page-item"
+                                    th:if="${(page.getTotalPages()-1) /5 != page.getPageable().pageNumber / 5}">
+                                    <button type="button" class="page-link text-secondary px-2"
+                                            th:attr="page=${(page.getPageable().getPageNumber()/5 + 1) * 5}"
+                                            onclick="submitFormbyPage(this.getAttribute('page'))"> 다음
+                                    </button>
+                                </li>
+                                <input type="hidden" name="page" id="page"
+                                       th:value="${page.getPageable().getPageNumber()}">
+                            </ul>
+                        </nav>
+                        <div>
+                            <hr class="my-0 border-dark mb-4">
+                        </div>
+                        <!--페이징 처리-->
+                    </div>
+                </form>
+
+
+                <!--목록 div-->
+                <div class="mb-4 text-center" th:if ="${page.getNumberOfElements() == 0 }">
+                    <span class="fw-normal fs-5 ">존재하는 상품이 없습니다.</span>
+                </div>
+                <div class="row mb-4" th:each="cont : ${page.getContent()}">
+                    <div class="col-md-2">
+                        <a th:href="@{/item/{id}(id=${cont.id})}">
+                            <img th:src="'/img/items/' + ${cont.fileName}" class="img_list" alt="...">
+                        </a>
+                    </div>
+                    <div class="col-md-7 px-4">
+                        <div>
+                            <a class="text-decoration-none text-dark" th:href="@{/item/{id}(id=${cont.id})}">
+
+                                <span class="fs-5 fw-normal" th:text="${cont.name}">책제목제목제목</span>
+                            </a>
+                        </div>
+                        <div class="mb-2">
+                            <span class="fs-6 fw-light" th:text="${cont.author}">출판사출판사</span> -
+                            <span class="fs-6 fw-light" th:text="${cont.publisher}">출판사출판사</span> - <span
+                                class="fs-6 fw-light"
+                                th:text="${#temporals.format(cont.publicationDate, 'yyyy년 MM월 dd일')}">2020.03.33</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class=" fs-6 fw-normal" th:text="${cont.price}">10000</span> 원
+                        </div>
+                        <div class="mb-3">
+                            <div class="fs-6 fw-lighter d-inline-block text-truncate" style="max-width: 500px;">
+                                책 소개를하겠습니다. 이책으로 말할것같으면 김영한선생님의 혼이 담긴 책으로 누구에게나 쉽게
+                            </div>
+                        </div>
+
+                        <!--                        <div class="">-->
+                        <!--                            <div class="">-->
+                        <!--                            <span class="">-->
+                        <!--                                <i class="fa fa-pen"></i>-->
+                        <!--                            </span>-->
+                        <!--                                <a class="text-decoration-none text-dark" href="">-->
+                        <!--                                <span class="">-->
+                        <!--                                    리뷰-->
+                        <!--                                </span>-->
+                        <!--                                    <span class="">-->
+                        <!--                                    (5)-->
+                        <!--                                </span>-->
+                        <!--                                </a>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                    </div>
+                    <div class="col-md-3  m-auto text-center">
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal" data-bs-target="#exampleModal"  th:onclick="|ajaxAddCart(${cont.id})|">장바구니</button>
+                        </div>
+
+                        <div>
+                            <a href="">
+                                <button class="btn btn-secondary" style="width: 100px">바로구매</button>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <hr class="my-0 border-light mt-4">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mx-auto">
+            <div class="modal-content border_box2 d-flex flex-column mx-auto">
+                <div class="p-3"></div>
+                <div class="modal-body ">
+                    <span class="fs-6 fw-normal" id="modal_text">
+                                        이미 장바구니에 담긴 상품이기때문에 수량이 추가되었습니다.<br>
+                                        장바구니로 이동하시겠습니까?
+                    </span>
+                </div>
+                <div class="row p-2 text-center align-bottom gx-3">
+                    <div class="col">
+                        <button type="button" class="btn w-75 btn-secondary "
+                                data-bs-dismiss="modal">취소
+                        </button>
+                    </div>
+                    <div class="col">
+                        <a class="text-decoration-none" href="../../cart">
+                            <button type="button" class="btn w-75 btn-primary ">확인</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-2"></div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

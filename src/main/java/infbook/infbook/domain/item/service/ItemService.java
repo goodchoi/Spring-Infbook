@@ -1,167 +1,78 @@
 package infbook.infbook.domain.item.service;
 
-import infbook.infbook.domain.category.domain.Category;
-import infbook.infbook.domain.category.domain.SubCategoryItem;
-import infbook.infbook.domain.category.repository.CategoryRepository;
-import infbook.infbook.domain.category.repository.SubCategoryItemRepository;
-import infbook.infbook.domain.category.repository.SubCategoryRepository;
-import infbook.infbook.domain.item.domain.*;
+import com.querydsl.core.types.Order;
+import infbook.infbook.domain.item.dto.ItemHomeDto;
+import infbook.infbook.domain.item.dto.ItemListDto;
+import infbook.infbook.domain.item.dto.ItemSingleDto;
+import infbook.infbook.domain.item.repository.ItemAdminRepository;
 import infbook.infbook.domain.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class ItemService {
 
-    @Value("${file.dir}")
-    private String fileDir;
-
-    private final CategoryRepository categoryRepository;
-    private final SubCategoryRepository subCategoryRepository;
     private final ItemRepository itemRepository;
-    private final SubCategoryItemRepository subCategoryItemRepository;
 
-
-    public List<Category> getCategoryList() {
-        return categoryRepository.findFetchAll();
+    public Page<ItemListDto> getItemOfSubCategory(String subcategoryName, Pageable pageable) {
+        return itemRepository.searchAllBySubcategoryName(subcategoryName, convertPageable(pageable));
     }
 
+    public Page<ItemListDto> getItemOfCategory(String categoryName, Pageable pageable) {
+        return itemRepository.searchAllByCategoryName(categoryName, convertPageable(pageable));
+    }
 
-    public Item enrollItem(ItemSaveDto itemSaveDto) throws IOException {
+    public ItemSingleDto getItemOfId(Long id) {
 
-        Category categoryReferenceById = categoryRepository.getReferenceById(itemSaveDto.getCategoryId());
-        Item saveItem = itemSaveDto.getSaveItem(categoryReferenceById);
-        String fileName = storeFile(itemSaveDto.getAttachedImage());
-        saveItem.changeFileName(fileName);
+        Optional<ItemSingleDto> itemSingDtoById = itemRepository.findItemSingDtoById(id);
 
-        try {
-            itemRepository.save(saveItem);
+        return itemSingDtoById.orElseThrow(() -> new IllegalArgumentException("검색하는 상품의 Id가 없습니다."));
+    }
 
-            List<SubCategoryItem> subcategories = getSubCategories(itemSaveDto.getSubCategories(), saveItem);
-            subCategoryItemRepository.saveAll(subcategories);
+    private Pageable convertPageable(Pageable pageable) {
+        int pageNumber = pageable.getPageNumber();
+        int pageSize = pageable.getPageSize();
+        String property = pageable.getSort().get().findFirst()
+                .orElseThrow(() -> new IllegalStateException("sort 파라미터가 없습니다."))
+                .getProperty();
 
-            saveItem.changeSubCategories(subcategories);
-        } catch (Exception e) {
-            Files.deleteIfExists(Path.of(makeFullPath(fileDir + fileName)));
-            throw e;
+        if (property.equals("newest")) {
+            return PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "publicationDate"));
         }
-        return saveItem;
-    }
-
-
-    public ItemAdminDto getItemAdiminDtoByItemId(Long itemId) {
-        Item findItem = itemRepository.findQuickItem(itemId)
-                .orElseThrow(() -> new IllegalArgumentException("아이템이 존재하지 않습니다."));
-        return ItemAdminDto.getItemAdminDto(findItem);
-    }
-
-    public ItemUpdateFormDto getItemSaveDtoByItemId(Long itemId) {
-        Item findItem = itemRepository.findById(itemId)
-                .orElseThrow(() -> new IllegalArgumentException("아이템이 존재하지 않습니다."));
-
-        return findItem.getItemSaveDto();
-    }
-
-    public Long updateItem(Long itemId, ItemUpdateDto itemUpdateDto) throws IOException {
-
-        Item findItem = itemRepository.findQuickItem(itemId).orElseThrow(() -> new IllegalArgumentException("아이템이 존재하지 않습니다."));
-
-        String changedFileName = editFile(itemUpdateDto.getAttachedImage(), itemUpdateDto.getFileName());
-        itemUpdateDto.setFileName(changedFileName);
-        if (!findItem.getCategory().getId().equals(itemUpdateDto.getCategoryId())) {
-            findItem.updateItem(itemUpdateDto, categoryRepository.getReferenceById(itemUpdateDto.getCategoryId()));
+        if (property.equals("highprice")) {
+            return PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "price"));
         }
-        List<SubCategoryItem> deleteSubcategoryies = findItem.getSubCategories().stream()
-                .filter(s -> !itemUpdateDto.getSubCategories().contains(s.getSubCategory().getId()))
-                .toList();
-
-        if (!deleteSubcategoryies.isEmpty()) {
-            subCategoryItemRepository.deleteAll(deleteSubcategoryies);
+        if (property.equals("lowprice")) {
+            return PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "price"));
         }
 
-        List<Long> originSubcategories = findItem.getSubCategories().stream().map(s -> s.getSubCategory().getId()).toList();
-        List<Long> newSubcategories = itemUpdateDto.getSubCategories().stream()
-                .filter(s -> !originSubcategories.contains(s))
-                .toList();
-
-        List<SubCategoryItem> newSubCategories = getSubCategories(newSubcategories, findItem);
-
-        if (!newSubCategories.isEmpty()) {
-            subCategoryItemRepository.saveAll(newSubCategories);
-        }
-
-        return findItem.getId();
+        throw new IllegalArgumentException("적절하지 못한 sort 파라미터입니다.");
     }
 
-    private List<SubCategoryItem> getSubCategories(List<Long> subCategoryIdList, Item saveItem) {
-        return subCategoryIdList.stream()
-                .map(s -> SubCategoryItem.builder()
-                        .subCategory(subCategoryRepository.getReferenceById(s))
-                        .item(saveItem)
-                        .build())
-                .toList();
+    public Page<ItemListDto> getPopularItemOfSubCategeory(String subcategoryName, Pageable pageable) {
+        return itemRepository.searchPopularBySubCategoryName(subcategoryName, pageable);
     }
 
-    private String storeFile(MultipartFile multipartFile) throws IOException {
-        if (multipartFile.isEmpty()) {
-            throw new IllegalStateException("등록할 이미지가 없습니다.");
-        }
-
-        String originalFileName = multipartFile.getOriginalFilename();
-        String newFileName = createNewFileName(originalFileName);
-        multipartFile.transferTo(new File(makeFullPath(newFileName)));
-
-        return newFileName;
+    public Page<ItemListDto> getPopularItemOfCategeory(String categoryName, Pageable pageable) {
+        return itemRepository.searchPopularByCategoryName(categoryName, pageable);
     }
 
-    private String editFile(MultipartFile multipartFile, String originFileName) throws IOException {
-        if (multipartFile.isEmpty()) {
-            return originFileName;
-        }
-
-        Files.deleteIfExists(Path.of(makeFullPath(fileDir + originFileName)));
-
-        String changedName = changeFileNmae(originFileName, multipartFile.getOriginalFilename());
-        multipartFile.transferTo(new File(makeFullPath(changedName)));
-
-        return changedName;
+    /**
+     * 베스트셀러는 홈화면에서 요청되므로 사용 빈도가 굉장히 높고, 쿼리문 비용이 크기때문에 스프링 로컬 캐시를 사용한다.
+     */
+    @Cacheable(cacheNames = "bestSellerCache")
+    public List<ItemHomeDto> getBestSellers() {
+        return itemRepository.findBestSellers();
     }
-
-    private String changeFileNmae(String originFileName, String targeName) {
-        int posOrigin = originFileName.lastIndexOf(".");
-        String fileName = originFileName.substring(0, posOrigin);
-
-        int posTarget = targeName.lastIndexOf(".");
-        String ext = targeName.substring(posTarget + 1);
-        return fileName + "." + ext;
-    }
-
-
-    private String createNewFileName(String originFileName) {
-        int pos = originFileName.lastIndexOf(".");
-        String ext = originFileName.substring(pos + 1);
-        String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext;
-    }
-
-
-    private String makeFullPath(String fileName) {
-        return fileDir + fileName;
-    }
-
-
 }

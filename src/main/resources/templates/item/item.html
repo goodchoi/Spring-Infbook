@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title layout:fragment="title">상세 상품</title>
+    <th:block layout:fragment="csrf">
+        <meta name="_csrf" th:content="${_csrf?.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
+    </th:block>
+
+    <script src="/js/shoppingcart.js"></script>
+</head>
+
+<th:block layout:fragment="content">
+    <!-- Open Content -->
+    <section class="bg-white">
+        <div class="container-lg pb-5">
+            <div class="row g-0">
+                <div class="col-lg-3 mt-5">
+                    <div class="card mb-3 ">
+                        <img th:src="'/img/items/' + ${item.fileName}" class="img_big shadow-lg" alt="...">
+                    </div>
+
+                </div>
+                <!-- col end -->
+                <div class="col-lg-9 mt-5 px-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2 fw-bold mb-4" th:text="${item.name}">자바 ORM 표준 JPA 프레임워크</h1>
+                            <h2 class="h3 fw-lighter fs-3 mb-4">스프링 데이터 예제 프로젝트로 배우는 전자정부 표준 데이터베이스 프레임워크</h2>
+                            <div >
+                                <ul class="list-inline  m-auto">
+                                    <li class="list-inline-item ">
+                                        <h6>출판사:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p th:text="${item.publisher}">에이콘 출판사</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="list-inline m-auto ">
+                                    <li class="list-inline-item ">
+                                        <h6>출간일:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p th:text="${#temporals.format(item.publicationDate, 'yyyy년 MM월 dd일')}">2022.07.10</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="list-inline m-auto ">
+                                    <li class="list-inline-item ">
+                                        <h6>저자:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p th:text="${item.author}">김영한</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="list-inline m-auto ">
+                                    <li class="list-inline-item ">
+                                        <h6>ISBN:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p th:text="${item.isbn}">979-11-6175-427-7</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4">
+                                <ul class="list-inline m-auto ">
+                                    <li class="list-inline-item ">
+                                        <h6>쪽수:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p th:text="${item.pageNumber}">734<span>쪽</span></p>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <span class="h3 fw-bold fs-3" th:text="${item.price}">15000</span> <span class="h3 fs-3">원</span>
+
+
+                            <form action="" method="get">
+                                <input type="hidden" name="product-title" value="Activewear">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <ul class="list-inline pb-3">
+                                            <li class="list-inline-item text-right">
+                                                수량
+                                                <input type="hidden" name="requestQuantity" id="requestQuantity" value="1">
+                                            </li>
+                                            <li class="list-inline-item"><button class="btn fs-6 btn-light shadow-none " id="btn-minus">-</button></li>
+                                            <li class="list-inline-item"><button class="badge fs-6 bg-success border-0 shadow-none" id="var-value">1</button></li>
+                                            <li class="list-inline-item"><button class="btn fs-6 btn-light shadow-none " id="btn-plus">+</button></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row pb-3">
+                                    <div class="col d-grid">
+                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">바로구매</button>
+                                    </div>
+                                    <div class="col d-grid">
+<!--                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">장바구니</button>-->
+                                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" id="addToCart" th:onclick="|ajaxAddCart(${item.id})|">
+                                            장바구니
+                                        </button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered mx-auto">
+                                                <div class="modal-content border_box2 d-flex flex-column mx-auto">
+                                                    <div class="p-3"></div>
+                                                    <div class="modal-body ">
+                                                        <span class="fs-6 fw-normal" id="modal_text" >
+                                                            이미 장바구니에 담긴 상품이기때문에 수량이 추가되었습니다.<br>
+                                                            장바구니로 이동하시겠습니까?
+                                                        </span>
+                                                    </div>
+                                                    <div class="row p-2 text-center align-bottom gx-3">
+                                                        <div class="col">
+                                                            <button type="button" class="btn w-75 btn-secondary " data-bs-dismiss="modal">취소</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a class="text-decoration-none" href="../../cart">
+                                                                <button type="button" class="btn w-75 btn-primary ">확인</button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Close Content -->
+
+    <!-- Start Article -->
+    <section class="py-2">
+        <div class="container  border-light">
+            <div class="row text-left ">
+                <h4>목차</h4>
+            </div>
+            <hr class="shadow-lg">
+            <p>
+                <button class="btn btn-outline-secondary" id="index_button" onclick="index_button()" type="button" >
+                    목차 숨기기
+                </button>
+            </p>
+            <div class="collapse border p-5 show" id="collapseExample" >
+                <p class="" style="white-space: pre-line; " th:text="${item.index}">
+                </p>
+            </div>
+        </div>
+    </section>
+</th:block>
+
+</html>

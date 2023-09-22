@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/adminlayout.html}">
+
+<head>
+    <title layout:fragment="title">상품 상세</title>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+    </style>
+
+</head>
+
+<th:block layout:fragment="content">
+    <div class="w-50 container py-4  ">
+        <header class="pb-3 mb-4 border-bottom">
+            <span class="fs-4 fw-bold">상품</span>
+        </header>
+
+        <form class="form-control" th:object="${item}" th:action="@{'/admin/item/'+${id}+'/edit'}" method="post"
+              enctype="multipart/form-data">
+            <div class="form-control-plaintext mb-3">
+                <div id="image_container" class="mb-2">
+                </div>
+                <label for="cover">책 표지</label>
+                <img id="cover" th:src="*{'/img/items/'+fileName}" class="img">
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label th:for="name">상품명</label>
+                <input type="text" class="form-control" th:field="*{name}" readonly>
+
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label for="category">상위 카테고리</label>
+                <input type="text" class="form-control" id="category" th:field="*{categoryName}" readonly>
+            </div>
+            <div class="form-control mb-3 ">
+                <label>하위 카테고리</label>
+                <input type="text" class="form-control" th:field="*{subCategories}" readonly>
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label for="publisher">출판사</label>
+                <input type="text" class="form-control" id="publisher" th:field="*{publisher}" readonly>
+                <!--                <th:block th:each="subCategory : ${item.subCategories}" >-->
+                <!--                    <span th:text="${subCategory.subCategory.getName()}"></span>-->
+                <!--                </th:block>-->
+            </div>
+
+            <div class="form-control-plaintext mb-3">
+                <label for="publicationDate">출간일</label>
+                <input type="text" class="form-control" id="publicationDate" th:field="*{publicationDate}" readonly>
+
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label for="price">가격</label>
+                <input type="number" class="form-control" id="price" th:field="*{price}" readonly>
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label for="stockQuantity">수량</label>
+                <input type="number" class="form-control"
+                       id="stockQuantity" th:field="*{stockQuantity}" readonly>
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label for="pageNumber">쪽수</label>
+                <input type="number" class="form-control" id="pageNumber" th:field="*{pageNumber}" readonly>
+
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label for="author">저자</label>
+                <input type="text" class="form-control" placeholder="저자를 입력하세요" id="author" th:field="*{author}"
+                       readonly>
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label for="isbn">ISBN</label>
+                <input type="text" class="form-control" placeholder="ISBN을 입력하세요" id="isbn" th:field="*{isbn}" readonly>
+            </div>
+
+            <div class="form-control-plaintext mb-3">
+                <label for="index">목차</label>
+                <textarea type="textarea" class="form-control"
+                          placeholder="목차를 입력하세요" id="index" th:field="*{index}" rows="10" readonly>
+                </textarea>
+            </div>
+            <button class="btn btn-primary">
+                <a class="text-decoration-none text-white" th:href="@{'/admin/item/'+${id}+'/edit'}">수정</a>
+            </button>
+        </form>
+
+    </div>
+</th:block>
+
+</html>
