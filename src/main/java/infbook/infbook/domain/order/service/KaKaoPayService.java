@@ -6,9 +6,9 @@ import infbook.infbook.domain.order.dto.kakaoDto.KaKaoApproveResponse;
 import infbook.infbook.domain.order.dto.kakaoDto.KaKaoPayResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -23,6 +23,9 @@ import static org.springframework.http.HttpHeaders.*;
 @Slf4j
 @Service
 public class KaKaoPayService {
+
+    @Value("${project.url}")
+    private String url;
 
     private final WebClient webClient;
 
@@ -99,9 +102,9 @@ public class KaKaoPayService {
         vo.add("quantity", sumQuantity(order.getOrderItems()));
         vo.add("total_amount", String.valueOf(order.getTotalPrice()));
         vo.add("tax_free_amount", "0");
-        vo.add("approval_url", "http://localhost:8080/order/pay");
-        vo.add("cancel_url", "http://localhost:8080/cart/");
-        vo.add("fail_url", "http://localhost:8080/cart/");
+        vo.add("approval_url", url + "order/pay");
+        vo.add("cancel_url", url + "order/cart");
+        vo.add("fail_url", url + "order/cart");
 
         return vo;
     }

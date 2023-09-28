@@ -36,7 +36,7 @@ public class ItemRepository {
     public Page<ItemListDto> searchAllBySubcategoryName(String subcategryName, Pageable pageable) {
         List<ItemListDto> itemList = jpaQueryFactory
                 .select(new QItemListDto(
-                        item.id, item.name, item.publisher, item.author, item.fileName
+                        item.id, item.name,item.subTitle, item.publisher, item.author, item.fileName
                         , item.publicationDate, item.price
                 ))
                 .from(item)
@@ -71,7 +71,7 @@ public class ItemRepository {
     public Page<ItemListDto> searchAllByCategoryName(String categoryName, Pageable pageable) {
         List<ItemListDto> itemList = jpaQueryFactory
                 .select(new QItemListDto(
-                        item.id, item.name, item.publisher, item.author, item.fileName
+                        item.id, item.name, item.subTitle,item.publisher, item.author, item.fileName
                         , item.publicationDate, item.price
                 ))
                 .from(item)
@@ -102,7 +102,7 @@ public class ItemRepository {
     public Optional<ItemSingleDto> findItemSingDtoById(Long id) {
 
         ItemSingleDto itemSingleDto = jpaQueryFactory.
-                select(new QItemSingleDto(item.id, item.name, item.publisher, item.author, item.isbn
+                select(new QItemSingleDto(item.id, item.name, item.subTitle,item.publisher, item.author, item.isbn
                         , item.fileName, item.publicationDate, item.pageNumber, item.price, item.index))
                 .from(item)
                 .where(item.id.eq(id))
@@ -132,7 +132,7 @@ public class ItemRepository {
 
         List<Tuple> sales = jpaQueryFactory
                 .select(new QItemListDto(
-                        item.id, item.name, item.publisher, item.author, item.fileName
+                        item.id, item.name, item.subTitle,item.publisher, item.author, item.fileName
                         , item.publicationDate, item.price
                 ), orderItem.quantity.sum().as("sales"))
                 .from(item)
@@ -170,7 +170,7 @@ public class ItemRepository {
 
         List<Tuple> sales = jpaQueryFactory
                 .select(new QItemListDto(
-                        item.id, item.name, item.publisher, item.author, item.fileName
+                        item.id, item.name, item.subTitle, item.publisher, item.author, item.fileName
                         , item.publicationDate, item.price
                 ), orderItem.quantity.sum().as("sales"))
                 .from(item)
