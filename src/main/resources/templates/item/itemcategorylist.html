@@ -101,7 +101,7 @@
                                             onclick="submitFormbyPage(this.getAttribute('page'))">이전
                                     </button>
                                 </li>
-                                <th:block th:if = "${page.getNumberOfElements() > 1}">
+                                <th:block th:if = "${page.getNumberOfElements() > 0}">
                                     <th:block th:if="${(page.getTotalPages()-1) /5 == page.getPageable().pageNumber / 5}">
                                         <li class="page-item"
                                             th:each="num : ${#numbers.sequence((page.getPageable().pageNumber/5)*5 + 1
@@ -152,7 +152,7 @@
                 <div class="row mb-4" th:each="cont : ${page.getContent()}">
                     <div class="col-md-2">
                         <a th:href="@{/item/{id}(id=${cont.id})}">
-                            <img th:src="'/img/items/' + ${cont.fileName}" class="img_list" alt="...">
+                            <img th:src="|${@environment.getProperty('cloud.aws.s3.url')}${cont.fileName}|" class="img_list border" alt="...">
                         </a>
                     </div>
                     <div class="col-md-7 px-4">
@@ -169,10 +169,10 @@
                                 th:text="${#temporals.format(cont.publicationDate, 'yyyy년 MM월 dd일')}">2020.03.33</span>
                         </div>
                         <div class="mb-3">
-                            <span class=" fs-6 fw-normal" th:text="${cont.price}">10000</span> 원
+                            <span class=" fs-6 fw-normal" th:text="${#numbers.formatInteger(cont.price,3,'COMMA')}">10000</span> 원
                         </div>
                         <div class="mb-3">
-                            <div class="fs-6 fw-lighter d-inline-block text-truncate" style="max-width: 500px;">
+                            <div class="fs-6 fw-lighter d-inline-block text-truncate" style="max-width: 500px;" th:text="${cont.subTitle}">
                                 책 소개를하겠습니다. 이책으로 말할것같으면 김영한선생님의 혼이 담긴 책으로 누구에게나 쉽게
                             </div>
                         </div>

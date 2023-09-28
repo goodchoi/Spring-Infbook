@@ -18,8 +18,8 @@
         <div class="container-lg pb-5">
             <div class="row g-0">
                 <div class="col-lg-3 mt-5">
-                    <div class="card mb-3 ">
-                        <img th:src="'/img/items/' + ${item.fileName}" class="img_big shadow-lg" alt="...">
+                    <div class="mb-3 ">
+                        <img th:src="|${@environment.getProperty('cloud.aws.s3.url')}${item.fileName}|" class="img_big border shadow-lg" alt="...">
                     </div>
 
                 </div>
@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h1 class="h2 fw-bold mb-4" th:text="${item.name}">자바 ORM 표준 JPA 프레임워크</h1>
-                            <h2 class="h3 fw-lighter fs-3 mb-4">스프링 데이터 예제 프로젝트로 배우는 전자정부 표준 데이터베이스 프레임워크</h2>
+                            <h2 class="h3 fw-lighter fs-3 mb-4" th:text="${item.subTitle}">스프링 데이터 예제 프로젝트로 배우는 전자정부 표준 데이터베이스 프레임워크</h2>
                             <div >
                                 <ul class="list-inline  m-auto">
                                     <li class="list-inline-item ">
@@ -82,7 +82,7 @@
                             </div>
 
 
-                            <span class="h3 fw-bold fs-3" th:text="${item.price}">15000</span> <span class="h3 fs-3">원</span>
+                            <span class="h3 fw-bold fs-3" th:text="${#numbers.formatInteger(item.price,3,'COMMA')}">15000</span> <span class="h3 fs-3">원</span>
 
 
                             <form action="" method="get">

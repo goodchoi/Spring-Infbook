@@ -153,7 +153,7 @@
             <div class="border_box px-4 pt-4">
                 <div class="row mb-4" th:each="item : ${itemList}" th:classappend="${item.stock == 0} ? 'opacity'">
                     <div class="col-md-2 ">
-                        <img th:src="'/img/items/'+${item.fileName}" class="img_smaller" alt="...">
+                        <img th:src="|${@environment.getProperty('cloud.aws.s3.url')}${item.fileName}|" class="img_smaller border" alt="...">
                     </div>
                     <div class="col-md-5 m-auto ">
                         <div>

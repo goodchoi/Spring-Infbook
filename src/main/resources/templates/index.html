@@ -50,9 +50,10 @@
         <div class="row justify-content-md-center">
             <div class="col-12 col-md-2 p-5 mt-3" th:each="item:${bestSellers}">
                 <img th:src="|/img/rank/rank${itemStat.count}.svg|" >
-                <div class="mt-2">
+                <div class="mt-2" >
                     <a th:href="@{/item/{id}(id=${item.id})}">
-                        <img th:src="|/img/items/${item.fileName}|" class="img" alt="...">
+<!--                        <img th:src="|/img/items/${item.fileName}|" class="img" alt="...">-->
+                        <img th:src="|${@environment.getProperty('cloud.aws.s3.url')}${item.fileName}|" class="img border" alt="...">
                     </a>
                 </div>
                 <div class="text-center mt-3" style="width: 145px ">
