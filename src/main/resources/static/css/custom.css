@@ -15,7 +15,7 @@ Custom Css
 .img {
     width: 140px;
     height: 190px;
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .container_custom {
@@ -29,20 +29,20 @@ Custom Css
 }
 
 .img_list {
-    width: 110px;
-    height: 150px;
-    object-fit: fill;
+    width: 118px;
+    height: 155px;
+    object-fit: cover;
 }
 .img_big{
     width: 310px;
     height: 440px;
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .img_small{
     width: 100px;
     height: 130px;
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .pointer_cur{
@@ -52,7 +52,7 @@ Custom Css
 .img_smaller{
     width: 80px;
     height: 106px;
-    object-fit: fill;
+    object-fit: cover;
 }
 
 
