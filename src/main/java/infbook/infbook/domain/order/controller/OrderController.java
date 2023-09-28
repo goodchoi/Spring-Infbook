@@ -48,7 +48,7 @@ public class OrderController {
         model.addAttribute("memberAddress", Objects.requireNonNull(memberRepository.
                 findById(user.getUserId()).orElse(null)).getAddress());
         model.addAttribute("itemList", findItem);
-        return "/shopping/order";
+        return "shopping/order";
     }
 
 

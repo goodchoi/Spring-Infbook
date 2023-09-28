@@ -95,6 +95,14 @@
                 </div>
             </div>
             <div class="form-control-plaintext mb-3">
+                <label th:for="name">하위 제목</label>
+                <input type="text" class="form-control"
+                       placeholder="하위 제목을 입력하세요" th:field="*{subTitle}" value="">
+                <div th:if="${#fields.hasErrors('name')}">
+                    <p class="error" th:text="${#fields.errors('subTitle').get(0)}"></p>
+                </div>
+            </div>
+            <div class="form-control-plaintext mb-3">
                 <label for="category">상위 카테고리</label>
                 <select class="form-control" id="category" th:field="*{categoryId}">
                     <option value="">=====상위 카테고리를 선택하세요=====</option>

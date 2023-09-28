@@ -80,7 +80,7 @@
         <form class="form-control" th:object="${item}" th:action="@{'/admin/item/'+${id}+'/edit'}" method="post" enctype="multipart/form-data">
             <div class="form-control-plaintext mb-3">
                 <div id="image_container" class="mb-2">
-                    <img id = "book_image" th:src= "*{'/img/items/'+fileName}" class="img">
+                    <img id = "book_image" th:src="|${@environment.getProperty('cloud.aws.s3.url')}${item.fileName}|" class="img">
                 </div>
                 <label for="cover">책 표지</label>
                 <input type="file" class="form-control"

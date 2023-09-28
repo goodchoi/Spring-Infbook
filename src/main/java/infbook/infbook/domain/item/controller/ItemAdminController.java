@@ -28,7 +28,7 @@ public class ItemAdminController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String adminHome() {
-        return "/admin/adminhome";
+        return "admin/adminhome";
     }
 
     @RequestMapping(value = "/item/insert", method = RequestMethod.GET)
@@ -37,7 +37,7 @@ public class ItemAdminController {
                 subCategories(new ArrayList<>())
                 .build());
         model.addAttribute("categoryList", itemService.getCategoryList());
-        return "/admin/createbookform";
+        return "admin/createbookform";
     }
 
     @RequestMapping(value = "/item/insert", method = RequestMethod.POST)
@@ -48,7 +48,7 @@ public class ItemAdminController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("categoryList", itemService.getCategoryList());
-            return "/admin/createbookform";
+            return "admin/createbookform";
         }
         Item savedItem = itemService.enrollItem(itemSaveDto);
 
@@ -63,7 +63,7 @@ public class ItemAdminController {
         ItemAdminDto item = itemService.getItemAdiminDtoByItemId(itemId);
         model.addAttribute("item", item);
 
-        return "/admin/book";
+        return "admin/book";
     }
 
     /**
@@ -81,7 +81,7 @@ public class ItemAdminController {
         model.addAttribute("item", item);
         model.addAttribute("categoryList", itemService.getCategoryList());
 
-        return "/admin/updatebookform";
+        return "admin/updatebookform";
     }
 
     @RequestMapping(value = "/item/{id}/edit", method = RequestMethod.POST)
@@ -91,7 +91,7 @@ public class ItemAdminController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("categoryList", itemService.getCategoryList());
-            return "/admin/createbookform";
+            return "admin/createbookform";
         }
 
         Long updateId = itemService.updateItem(itemId, itemUpdateDto);

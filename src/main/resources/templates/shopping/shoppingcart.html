@@ -179,10 +179,10 @@
                                  th:classappend="${item.stock == 0} ? 'opacity'">
                                 <div class="col-md-2 ">
                                     <a th:href="@{/item/{id}(id=${item.id})}">
-                                        <img th:src="'/img/items/'+${item.fileName}" class="img_small" alt="...">
+                                        <img th:src="|${@environment.getProperty('cloud.aws.s3.url')}${item.fileName}|" class="img_small border" alt="...">
                                     </a>
                                 </div>
-                                <div class="col-md-4 m-auto ">
+                                <div class="col-md-6 m-auto">
                                     <div>
                                         <a class="text-decoration-none text-dark" href="">
                                             <span class="fs-5 fw-normal" th:text="${item.name}">책제목제목제목</span>
@@ -197,7 +197,7 @@
                                               th:text="${#numbers.formatInteger(item.price,3,'COMMA')}">10000</span> 원
                                     </div>
                                 </div>
-                                <div class="col-md-4 m-auto text-center ">
+                                <div class="col-md-3 m-auto text-center ">
                                     <div class="m-auto text-center" th:id="|outOfStockSign${itemStat.index}|"
                                          th:if="${item.stock == 0}"
                                          th:hidden="${item.stock != 0}">
@@ -205,8 +205,8 @@
                                     </div>
                                     <div class="align-self-center" th:id="|normalSign${itemStat.index}|"
                                          th:if="${item.stock != 0}">
-                                        <p class="pe-auto fs-6 fw-normal pt-2 mb-2">
-                                            <span class="text-center" th:id="|subprice${itemStat.index}|" data-price="0"
+                                        <p class="fs-6 fw-normal pt-2 mb-2 me-2">
+                                            <span class="text-center " th:id="|subprice${itemStat.index}|" data-price="0"
                                                   th:text="${#numbers.formatInteger(item.price * item.quantity,3,'COMMA')}"
                                             >15000</span>원</p>
                                         <ul class="list-inline ">
@@ -251,7 +251,7 @@
                                 </div>
                             </div>
                             <div class="col-md-1 m-auto">
-                                <button type="button" class="btn btn-sm btn-danger"
+                                <button type="button" class="btn btn-light"
                                         th:onclick="|delete_shopping_item(${itemStat.index})|">삭제
                                 </button>
                             </div>
