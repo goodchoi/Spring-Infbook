@@ -27,10 +27,12 @@ public class ItemSingleDto {
 
     private Integer price;
 
+    private String subTitle;
+
     private String index;
 
     @QueryProjection
-    public ItemSingleDto(Long id, String name, String publisher, String author, String isbn, String fileName, LocalDate publicationDate, Integer pageNumber, Integer price, String index) {
+    public ItemSingleDto(Long id, String name, String subTitle,String publisher, String author, String isbn, String fileName, LocalDate publicationDate, Integer pageNumber, Integer price, String index) {
         this.id = id;
         this.name = name;
         this.publisher = publisher;
@@ -41,5 +43,6 @@ public class ItemSingleDto {
         this.pageNumber = pageNumber;
         this.price = price;
         this.index = index;
+        this.subTitle = subTitle;
     }
 }

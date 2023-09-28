@@ -1,5 +1,12 @@
 package infbook.infbook.domain.item.service;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.mysema.commons.lang.Pair;
 import infbook.infbook.domain.category.domain.Category;
 import infbook.infbook.domain.category.domain.SubCategoryItem;
 import infbook.infbook.domain.category.repository.CategoryRepository;
@@ -31,9 +38,11 @@ import java.util.UUID;
 @Transactional
 public class ItemAdminService {
 
-    @Value("${file.dir}")
-    private String fileDir;
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
+
+    private final AmazonS3 amazonS3;
     private final CategoryRepository categoryRepository;
     private final SubCategoryRepository subCategoryRepository;
     private final ItemAdminRepository itemAdminRepository;
@@ -49,19 +58,16 @@ public class ItemAdminService {
 
         Category categoryReferenceById = categoryRepository.getReferenceById(itemSaveDto.getCategoryId());
         Item saveItem = itemSaveDto.getSaveItem(categoryReferenceById);
-        String fileName = storeFile(itemSaveDto.getAttachedImage());
+        String fileName = uploadFile(itemSaveDto.getAttachedImage());
         saveItem.changeFileName(fileName);
 
         try {
             itemAdminRepository.save(saveItem);
-
             List<SubCategoryItem> subcategories = getSubCategories(itemSaveDto.getSubCategories(), saveItem);
             subCategoryItemRepository.saveAll(subcategories);
-
             saveItem.changeSubCategories(subcategories);
         } catch (Exception e) {
-            Files.deleteIfExists(Path.of(makeFullPath(fileDir + fileName)));
-            throw e;
+            e.printStackTrace();
         }
         return saveItem;
     }
@@ -80,12 +86,12 @@ public class ItemAdminService {
         return findItem.getItemSaveDto();
     }
 
-    public Long updateItem(Long itemId, ItemUpdateDto itemUpdateDto) throws IOException {
+    public Long updateItem(Long itemId, ItemUpdateDto itemUpdateDto) {
 
         Item findItem = itemAdminRepository.findFetchItem(itemId).orElseThrow(() -> new IllegalArgumentException("아이템이 존재하지 않습니다."));
 
-        String changedFileName = editFile(itemUpdateDto.getAttachedImage(), itemUpdateDto.getFileName());
-        itemUpdateDto.setFileName(changedFileName);
+        // String changedFileName = editFile(itemUpdateDto.getAttachedImage(), itemUpdateDto.getFileName());
+        //  itemUpdateDto.setFileName(changedFileName);
         if (!findItem.getCategory().getId().equals(itemUpdateDto.getCategoryId())) {
             findItem.updateItem(itemUpdateDto, categoryRepository.getReferenceById(itemUpdateDto.getCategoryId()));
         }
@@ -120,51 +126,52 @@ public class ItemAdminService {
                 .toList();
     }
 
-    private String storeFile(MultipartFile multipartFile) throws IOException {
+    private String uploadFile(MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {
             throw new IllegalStateException("등록할 이미지가 없습니다.");
         }
 
         String originalFileName = multipartFile.getOriginalFilename();
-        String newFileName = createNewFileName(originalFileName);
-        multipartFile.transferTo(new File(makeFullPath(newFileName)));
+        String contentType = ""; //AmazonS3로 put 요청을 보낼때 필수로 등록해야함 만일 등록하지않으면 업로드가 이루어지지않음.
+        Pair<String, String> fileNameAndExt = createNewFileName(originalFileName);
+        String newFileName = fileNameAndExt.getFirst();
+        String ext = fileNameAndExt.getSecond();
+        String createdName = newFileName + "." + ext;
 
-        return newFileName;
-    }
+        contentType = switch (ext) {
+            case "jpg" -> "image/jpeg";
+            case "png" -> "image/png";
+            default -> throw new IllegalStateException("지원하지않는 파일형식");
+        };
 
-    private String editFile(MultipartFile multipartFile, String originFileName) throws IOException {
-        if (multipartFile.isEmpty()) {
-            return originFileName;
+        try {
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(contentType);
+
+            amazonS3.putObject(new PutObjectRequest(bucket, "image/item" + createdName
+                    , multipartFile.getInputStream(), metadata).withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch (AmazonServiceException e) {
+            e.printStackTrace();
         }
 
-        Files.deleteIfExists(Path.of(makeFullPath(fileDir + originFileName)));
-
-        String changedName = changeFileNmae(originFileName, multipartFile.getOriginalFilename());
-        multipartFile.transferTo(new File(makeFullPath(changedName)));
-
-        return changedName;
+        return createdName;
     }
 
-    private String changeFileNmae(String originFileName, String targeName) {
-        int posOrigin = originFileName.lastIndexOf(".");
-        String fileName = originFileName.substring(0, posOrigin);
+//    private String changeFileNmae(String originFileName, String targeName) {
+//        int posOrigin = originFileName.lastIndexOf(".");
+//        String fileName = originFileName.substring(0, posOrigin);
+//
+//        int posTarget = targeName.lastIndexOf(".");
+//        String ext = targeName.substring(posTarget + 1);
+//        return fileName + "." + ext;
+//    }
 
-        int posTarget = targeName.lastIndexOf(".");
-        String ext = targeName.substring(posTarget + 1);
-        return fileName + "." + ext;
-    }
 
-
-    private String createNewFileName(String originFileName) {
+    private Pair<String, String> createNewFileName(String originFileName) {
         int pos = originFileName.lastIndexOf(".");
         String ext = originFileName.substring(pos + 1);
         String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext;
-    }
-
-
-    private String makeFullPath(String fileName) {
-        return fileDir + fileName;
+        return Pair.of(uuid, ext);
     }
 
 

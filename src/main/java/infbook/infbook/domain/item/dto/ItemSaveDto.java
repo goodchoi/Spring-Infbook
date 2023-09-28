@@ -24,6 +24,9 @@ public class ItemSaveDto {
     private String name;
 
     @NotEmpty
+    private String subTitle;
+
+    @NotEmpty
     private String publisher;
 
     @NotEmpty
@@ -58,7 +61,7 @@ public class ItemSaveDto {
     private Integer stockQuantity;
 
     @Builder
-    public ItemSaveDto(MultipartFile attachedImage, String name, String publisher, String author, String isbn, LocalDate publicationDate, Integer pageNumber, Integer price, Long categoryId, List<Long> subCategories, String index, Integer stockQuantity) {
+    public ItemSaveDto(MultipartFile attachedImage, String name, String subTitle,String publisher, String author, String isbn, LocalDate publicationDate, Integer pageNumber, Integer price, Long categoryId, List<Long> subCategories, String index, Integer stockQuantity) {
 
         this.attachedImage = attachedImage;
         this.name = name;
@@ -67,6 +70,7 @@ public class ItemSaveDto {
         this.isbn = isbn;
         this.publicationDate = publicationDate;
         this.pageNumber = pageNumber;
+        this.subTitle = subTitle;
         this.price = price;
         this.categoryId = categoryId;
         if (Objects.isNull(subCategories)) {
@@ -84,6 +88,7 @@ public class ItemSaveDto {
                 .isbn(this.getIsbn())
                 .category(refCategory)
                 .author(this.getAuthor())
+                .subTitle(this.subTitle)
                 .publisher(this.getPublisher())
                 .price(this.getPrice())
                 .index(this.getIndex())

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder
 public class ItemListDto {
     private Long id;
 
@@ -30,10 +29,13 @@ public class ItemListDto {
 
     private Integer price;
 
+    private String subTitle;
+
     @QueryProjection
-    public ItemListDto(Long id, String name, String publisher, String author, String fileName, LocalDate publicationDate, Integer price) {
+    public ItemListDto(Long id, String name,String subTitle ,String publisher, String author, String fileName, LocalDate publicationDate, Integer price) {
         this.id = id;
         this.name = name;
+        this.subTitle = subTitle;
         this.publisher = publisher;
         this.author = author;
         this.fileName = fileName;

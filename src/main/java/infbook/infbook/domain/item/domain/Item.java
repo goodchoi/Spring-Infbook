@@ -50,6 +50,9 @@ public class Item extends BaseEntity {
     @Column(nullable = false, columnDefinition = "datetime")
     private LocalDate publicationDate;
 
+    @Column(nullable = true)
+    private String subTitle;
+
     @Column(nullable = false)
     private Integer pageNumber;
 
@@ -70,7 +73,7 @@ public class Item extends BaseEntity {
     private Integer stockQuantity;
 
     @Builder
-    public Item(String name, String publisher, String author, String isbn, String fileName, LocalDate publicationDate, Integer pageNumber, Integer price, Category category, List<SubCategoryItem> subCategories, String index, Integer stockQuantity) {
+    public Item(String name, String publisher, String author, String isbn, String fileName, LocalDate publicationDate, Integer pageNumber,String subTitle, Integer price, Category category, List<SubCategoryItem> subCategories, String index, Integer stockQuantity) {
         this.name = name;
         this.publisher = publisher;
         this.author = author;
@@ -83,6 +86,7 @@ public class Item extends BaseEntity {
         this.subCategories = subCategories;
         this.index = index;
         this.stockQuantity = stockQuantity;
+        this.subTitle = subTitle;
     }
 
 

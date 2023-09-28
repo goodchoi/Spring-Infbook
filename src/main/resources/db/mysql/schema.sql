@@ -57,6 +57,7 @@ create table item
     publication_date datetime     not null,
     publisher        varchar(60)  not null,
     stock_quantity   int          not null,
+    sub_title        varchar(255) null,
     category_id      bigint       null,
     constraint fk_item_category_id foreign key (category_id) references category (category_id)
 );
