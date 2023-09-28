@@ -1,18 +1,4 @@
-
-file:
-  dir: /Users/choedonghyeon/Desktop/Spring-Infbook/src/main/resources/static/img/items/
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/test_db?useSSL=false&allowPublicKeyRetrieval=true
-    username: infbook
-    password: dev
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      exclude: static/img/items/**
-      enabled: false
   thymeleaf:
     cache: false
     encoding: UTF-8
@@ -20,11 +6,68 @@ spring:
     basename: messages, errors
 
   profiles:
-    active: dev,test
+    active: prod
+
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: false
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource :
+    url: jdbc:mysql://${RDS_HOSTNAME}:${RDS_PORT}/${RDS_DB_NAME}
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
+
+cloud:
+  aws:
+    s3:
+      bucket: ${bucket_name}
+      url: ${AWS_S3_URL}
+    stack.auto: false
+    region:
+      static: ap-northeast-2
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY}
+
+project:
+  url: ${AWS_URL}
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/test_db?useSSL=false&allowPublicKeyRetrieval=true
+    username: infbook
+    password: dev
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      exclude: static/img/items/**
+      enabled: false
+
   sql:
     init:
-      schema-locations: classpath*:db/mysql/schema.sql
       mode: always
+      schema-locations: classpath*:db/mysql/schema.sql
 
   jpa:
     hibernate:
@@ -39,9 +82,28 @@ spring:
     #defer-datasource-initialization: true #하이버네이트
 
 
-  decorator:
-    datasource:
-      p6spy:
-        enable-logging: true
+  h2:
+    console:
+      enabled: false
 
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+cloud:
+  aws:
+    s3:
+      bucket: ${bucket.name}
+      url: ${AWS_S3_URL}
+    stack.auto: false
+    region:
+      static: ap-northeast-2
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY}
 
+project:
+  url: http://localhost:8080/
+
+#file:
+#  dir: /Users/choedonghyeon/Desktop/Spring-Infbook/src/main/resources/static/img/items/
