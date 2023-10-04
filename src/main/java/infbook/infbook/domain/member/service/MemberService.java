@@ -25,19 +25,25 @@ public class MemberService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final BCryptPasswordEncoder encoder;
 
-    public Long join(MemberSignupDto memberDto) {
+    public Member join(MemberSignupDto memberDto) {
 
         memberDto.setPassword(encoder.encode(memberDto.getPassword()));
-        Member sumbittedMember = Member.getSumbittedMember(memberDto);
-        duplicationCheckBeforeSave(sumbittedMember.getAccountId());
-        Member savedMember = memberRepository.save(sumbittedMember);
-        shoppingCartRepository.save(ShoppingCart.builder().member(sumbittedMember).build());
+        Member createdMember = Member.getSumbittedMember(memberDto);
+        duplicationCheckBeforeSave(createdMember.getAccountId());
+        memberRepository.save(createdMember);
+        shoppingCartRepository.save(ShoppingCart.builder().member(createdMember).build());
 
-        return savedMember.getId();
+        return createdMember;
     }
 
-    public String validateDuplicatedMember(String id) {
-        int count = memberRepository.countByAccountIdEquals(id);
+
+    /**
+     * ajax Id 중복검사 비즈니스 로직 메서드
+     * @Param accountId - 중복 검사 하고자 하는 id
+     * @Return 00 - 중복 되는 Id 있음. 01- 정상
+     */
+    public String validateDuplicatedMember(String accountId) {
+        int count = memberRepository.countByAccountIdEquals(accountId);
         if (count > 0) {
             return "00";
         }
@@ -51,7 +57,7 @@ public class MemberService {
      * @throw IllegalStateException 입력한 아이디가 이미 존재하는 경우 예외발생
      */
     private void duplicationCheckBeforeSave(String accountId) {
-        if (memberRepository.countByAccountIdEquals(accountId) > 0) {
+        if (validateDuplicatedMember(accountId).equals("00")) {
             throw new IllegalStateException("[MemberSerivce] 회원 가입 요청시 아이디 중복이 발생했습니다.");
         }
     }

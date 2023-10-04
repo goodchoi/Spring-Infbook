@@ -1,6 +1,5 @@
 package infbook.infbook.domain.member.controller;
 
-import infbook.infbook.domain.item.service.ItemService;
 import infbook.infbook.domain.member.dto.MemberSignupDto;
 import infbook.infbook.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -46,7 +44,7 @@ public class MemberController {
         }
         memberService.join(memberSignupDto);
 
-        return "redirect:/login";
+        return "redirect:/member/login";
     }
 
     @ResponseBody
