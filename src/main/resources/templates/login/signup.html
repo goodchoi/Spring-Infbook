@@ -30,6 +30,7 @@
                 $.ajax({
                     type: "GET",
                     url: "/member/check/" + $("#id").val(),
+                    dataType:"text",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
                     },

@@ -37,7 +37,7 @@
                 <div id="image_container" class="mb-2">
                 </div>
                 <label for="cover">책 표지</label>
-                <img id="cover" th:src="*{'/img/items/'+fileName}" class="img">
+                <img id="cover" th:src="|${@environment.getProperty('cloud.aws.s3.url')}${item.fileName}|" class="img">
             </div>
             <div class="form-control-plaintext mb-3">
                 <label th:for="name">상품명</label>
