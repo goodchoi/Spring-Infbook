@@ -42,14 +42,12 @@ public class ItemService {
 
     private Pageable convertPageable(Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
-        int pageSize = pageable.getPageSize();
+        int pageSize = fixPageSize(pageable.getPageSize());
+
         String property = pageable.getSort().get().findFirst()
                 .orElseThrow(() -> new IllegalStateException("sort 파라미터가 없습니다."))
                 .getProperty();
 
-        if (property.equals("newest")) {
-            return PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "publicationDate"));
-        }
         if (property.equals("highprice")) {
             return PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "price"));
         }
@@ -57,15 +55,21 @@ public class ItemService {
             return PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "price"));
         }
 
-        throw new IllegalArgumentException("적절하지 못한 sort 파라미터입니다.");
+        return  PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "publicationDate"));
+    }
+
+    private int fixPageSize(int pageSize){
+        return (pageSize == 5 || pageSize == 10) ? pageSize : 5;
     }
 
     public Page<ItemListDto> getPopularItemOfSubCategeory(String subcategoryName, Pageable pageable) {
-        return itemRepository.searchPopularBySubCategoryName(subcategoryName, pageable);
+
+        return itemRepository.
+                searchPopularBySubCategoryName(subcategoryName,PageRequest.of(pageable.getPageNumber(),fixPageSize(pageable.getPageSize())));
     }
 
     public Page<ItemListDto> getPopularItemOfCategeory(String categoryName, Pageable pageable) {
-        return itemRepository.searchPopularByCategoryName(categoryName, pageable);
+        return itemRepository.searchPopularByCategoryName(categoryName,PageRequest.of(pageable.getPageNumber(),fixPageSize(pageable.getPageSize())));
     }
 
     /**

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -40,11 +41,6 @@ public class ItemController {
         if(!CategoryUtil.hasCategory(categoryName)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"존재하지 않는 카테고리입니다.");
         }
-        /*
-        * 1.판매량은 다른 쿼리문필요.
-        * 3.페이지 버튼 마다 폼 제출 어떻게 할지.
-        *
-        * */
 
         String categoryKorName = CategoryUtil.getKorCategoryName(categoryName);
         String sortingProperty = getSortingProperty(pageable);
@@ -106,6 +102,6 @@ public class ItemController {
 
     private String getSortingProperty(Pageable pageable) {
         return pageable.getSort().get().findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지않는 정렬 파라미터입니다.")).getProperty();
+                .orElse(Sort.Order.by("newest")).getProperty();
     }
 }

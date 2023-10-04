@@ -129,7 +129,6 @@ public class ItemRepository {
      * 주문-상품 테이블의 추가적인 조인과 그룹핑이 필요하다.
      */
     public Page<ItemListDto> searchPopularBySubCategoryName(String subcategoryName, Pageable pageable) {
-
         List<Tuple> sales = jpaQueryFactory
                 .select(new QItemListDto(
                         item.id, item.name, item.subTitle,item.publisher, item.author, item.fileName
@@ -167,7 +166,6 @@ public class ItemRepository {
     }
 
     public Page<ItemListDto> searchPopularByCategoryName(String categoryName, Pageable pageable) {
-
         List<Tuple> sales = jpaQueryFactory
                 .select(new QItemListDto(
                         item.id, item.name, item.subTitle, item.publisher, item.author, item.fileName
