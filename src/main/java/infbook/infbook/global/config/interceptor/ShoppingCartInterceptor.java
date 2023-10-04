@@ -20,7 +20,6 @@ import java.util.Objects;
 @Slf4j
 @Transactional
 @RequiredArgsConstructor
-@Profile("dev")
 public class ShoppingCartInterceptor implements HandlerInterceptor {
 
     private final ShoppingItemRepository shoppingItemRepository;

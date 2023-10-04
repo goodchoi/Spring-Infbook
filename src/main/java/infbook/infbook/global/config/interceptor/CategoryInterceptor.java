@@ -15,18 +15,18 @@ import javax.inject.Inject;
 import java.util.Arrays;
 
 
-//@Slf4j
-//@Transactional
-//@RequiredArgsConstructor
-//@Profile("dev")
+@Slf4j
+@Transactional
+@RequiredArgsConstructor
+@Profile("dev")
 public class CategoryInterceptor implements HandlerInterceptor {
 
-//
-//    @Override
-//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-//        if (response.getStatus() == 200) {
-//            modelAndView.addObject("categories", CategoryUtil.getCategoryList());
-//        }
-//        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-//    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        if (response.getStatus() == 200) {
+            modelAndView.addObject("categories", CategoryUtil.getCategoryList());
+        }
+        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+    }
 }
