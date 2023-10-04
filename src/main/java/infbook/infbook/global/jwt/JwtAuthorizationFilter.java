@@ -1,7 +1,5 @@
 package infbook.infbook.global.jwt;
 
-import infbook.infbook.domain.member.domain.UserLevel;
-import infbook.infbook.domain.model.Address;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;

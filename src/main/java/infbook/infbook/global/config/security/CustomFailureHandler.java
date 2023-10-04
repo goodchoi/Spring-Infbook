@@ -22,7 +22,7 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
-
+        log.info("아니 외 안되?");
         String errorMessage = null;
 
         if (exception instanceof BadCredentialsException) {
@@ -37,8 +37,7 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
 
         errorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
         setDefaultFailureUrl("/member/login?error=true&message="+errorMessage);
-
-        super.onAuthenticationFailure(request, response, exception);
+        super.onAuthenticationFailure(request,response,exception);
     }
 
 }

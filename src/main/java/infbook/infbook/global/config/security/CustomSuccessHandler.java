@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final ShoppingItemRepository shoppingItemRepository;
@@ -40,7 +40,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                     ,shoppingItemRepository.countShoppingItemByMember(principal.getMember().getId()));
             setDefaultTargetUrl("/");
         }
-        super.onAuthenticationSuccess(request, response, authentication);
+        super.onAuthenticationSuccess(request,response,authentication);
     }
 
 }
