@@ -12,8 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +40,7 @@ public class ItemService {
 
         Optional<ItemSingleDto> itemSingDtoById = itemRepository.findItemSingDtoById(id);
 
-        return itemSingDtoById.orElseThrow(() -> new IllegalArgumentException("검색하는 상품의 Id가 없습니다."));
+        return itemSingDtoById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"검색하는 상품의 Id가 없습니다."));
     }
 
     private Pageable convertPageable(Pageable pageable) {
