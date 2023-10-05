@@ -1,24 +1,17 @@
 package infbook.infbook.domain.shoppingcart.repository;
 
-import infbook.infbook.abstractUtils.RepostoryUtil;
+import infbook.infbook.abstractTest.RepostoryTest;
 import infbook.infbook.domain.shoppingcart.dto.CartItemDto;
-import infbook.infbook.utils.TestConfig;
 import infbook.infbook.utils.models;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
 
-@Import({TestConfig.class})
-@Transactional
-@DataJpaTest
-class ShoppingItemAdminRepositoryTest extends RepostoryUtil {
+class ShoppingItemAdminRepositoryTest extends RepostoryTest {
 
 
     @DisplayName("장바구니에 담긴 상품의 개수를 회원번호로 조회할 수 있다.")

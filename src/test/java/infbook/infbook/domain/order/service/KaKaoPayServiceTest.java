@@ -30,58 +30,58 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 @Slf4j
 class KaKaoPayServiceTest {
 
-    private final WebClient webClient = WebClient.builder()
-            .baseUrl("https://kapi.kakao.com/v1/payment")
-            .defaultHeader(AUTHORIZATION, "KakaoAK d2128e2c4f21efb2ae5ddf9a4bf91f52")
-            .defaultHeader(CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-            .build()
-            .mutate().build();
-
-
-    @Test
-    void requestPayApprove() {
-
-        MultiValueMap<String, String> kaKaoApproveRequest = createKaKaoApproveRequest();
-        log.info("vo ={}", kaKaoApproveRequest);
-
-
-        Mono<KaKaoApproveResponse> stringMono = webClient.post()
-                .uri("/ready")
-                .body(BodyInserters.fromFormData(kaKaoApproveRequest))
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode() != HttpStatus.OK) {
-                        return clientResponse
-                                .createException()
-                                .flatMap(error -> {
-                                    log.warn("카카오페이 API 예외 status {} ,내용 {}",error.getStatusCode(),error.getResponseBodyAs(String.class));
-                                    return Mono.error(new RuntimeException("카카오페이 API 예외 발생") {
-                                    });
-                                });
-                    }
-
-                    return clientResponse.bodyToMono(KaKaoApproveResponse.class);
-                });
-        KaKaoApproveResponse block = stringMono.doOnError(throwable -> log.error("카카오페이 예외발생={}",throwable.getMessage())).block();
-        log.info("======================result={}", block);
-
-    }
-
-    private MultiValueMap<String, String> createKaKaoApproveRequest() {
-        MultiValueMap<String, String> vo = new LinkedMultiValueMap<>();
-        vo.add("cid", "TC0ONETIME");
-        vo.add("partner_order_id", "1");
-        vo.add("partner_user_id", "infbook");
-        vo.add("item_name", "자바의 정석 외 3권");
-        vo.add("item_code", "100,200,300,400");
-        vo.add("quantity", "5");
-        vo.add("total_amount", "10000");
-        vo.add("tax_free_amount", "0");
-        vo.add("approval_url", "http://localhost:8080/");
-        vo.add("cancel_url", "http://localhost:8080/");
-        vo.add("fail_url", "http://localhost:8080/");
-
-        return vo;
-    }
+//    private final WebClient webClient = WebClient.builder()
+//            .baseUrl("https://kapi.kakao.com/v1/payment")
+//            .defaultHeader(AUTHORIZATION, "KakaoAK d2128e2c4f21efb2ae5ddf9a4bf91f52")
+//            .defaultHeader(CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+//            .build()
+//            .mutate().build();
+//
+//
+//    @Test
+//    void requestPayApprove() {
+//
+//        MultiValueMap<String, String> kaKaoApproveRequest = createKaKaoApproveRequest();
+//        log.info("vo ={}", kaKaoApproveRequest);
+//
+//
+//        Mono<KaKaoApproveResponse> stringMono = webClient.post()
+//                .uri("/ready")
+//                .body(BodyInserters.fromFormData(kaKaoApproveRequest))
+//                .exchangeToMono(clientResponse -> {
+//                    if (clientResponse.statusCode() != HttpStatus.OK) {
+//                        return clientResponse
+//                                .createException()
+//                                .flatMap(error -> {
+//                                    log.warn("카카오페이 API 예외 status {} ,내용 {}",error.getStatusCode(),error.getResponseBodyAs(String.class));
+//                                    return Mono.error(new RuntimeException("카카오페이 API 예외 발생") {
+//                                    });
+//                                });
+//                    }
+//
+//                    return clientResponse.bodyToMono(KaKaoApproveResponse.class);
+//                });
+//        KaKaoApproveResponse block = stringMono.doOnError(throwable -> log.error("카카오페이 예외발생={}",throwable.getMessage())).block();
+//        log.info("======================result={}", block);
+//
+//    }
+//
+//    private MultiValueMap<String, String> createKaKaoApproveRequest() {
+//        MultiValueMap<String, String> vo = new LinkedMultiValueMap<>();
+//        vo.add("cid", "TC0ONETIME");
+//        vo.add("partner_order_id", "1");
+//        vo.add("partner_user_id", "infbook");
+//        vo.add("item_name", "자바의 정석 외 3권");
+//        vo.add("item_code", "100,200,300,400");
+//        vo.add("quantity", "5");
+//        vo.add("total_amount", "10000");
+//        vo.add("tax_free_amount", "0");
+//        vo.add("approval_url", "http://localhost:8080/");
+//        vo.add("cancel_url", "http://localhost:8080/");
+//        vo.add("fail_url", "http://localhost:8080/");
+//
+//        return vo;
+//    }
 
 
 }

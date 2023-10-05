@@ -1,6 +1,6 @@
 package infbook.infbook.domain.item.repository;
 
-import infbook.infbook.abstractUtils.RepostoryUtil;
+import infbook.infbook.abstractTest.RepostoryTest;
 import infbook.infbook.domain.category.domain.SubCategoryItem;
 import infbook.infbook.domain.item.domain.Item;
 import infbook.infbook.domain.item.dto.ItemHomeDto;
@@ -10,12 +10,11 @@ import infbook.infbook.utils.TestConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Rollback;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,9 +24,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static infbook.infbook.utils.models.*;
 
-@Import({TestConfig.class})
 @Slf4j
-class ItemRepositoryTest extends RepostoryUtil {
+class ItemRepositoryTest extends RepostoryTest {
 
     @Test
     @DisplayName("하위 카테고리이름으로 검색 - default 페이지 item 1개 0페이지,페이지사이즈 10 검증")
@@ -175,9 +173,6 @@ class ItemRepositoryTest extends RepostoryUtil {
 
         content.forEach(e -> log.info("{}", e));
     }
-
-
-
 
     private List<Item> itemMuiltipleInsert() {
         List<Item> testItems = new ArrayList<>();

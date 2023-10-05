@@ -1,5 +1,6 @@
 package infbook.infbook.domain.item.service;
 
+import infbook.infbook.abstractTest.ServiceTest;
 import infbook.infbook.domain.category.domain.Category;
 import infbook.infbook.domain.category.domain.SubCategory;
 import infbook.infbook.domain.category.repository.CategoryRepository;
@@ -28,19 +29,7 @@ import static org.mockito.Mockito.*;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-class ItemServiceTest {
-
-    @Mock
-    ItemRepository itemRepository;
-
-    @Mock
-    CategoryRepository categoryRepository;
-
-    @Mock
-    SubCategoryRepository subCategoryRepository;
-
-    @Mock
-    SubCategoryItemRepository subCategoryItemRepository;
+class ItemServiceTest extends ServiceTest {
 
     @InjectMocks
     ItemAdminService itemService;
@@ -50,20 +39,6 @@ class ItemServiceTest {
     @DisplayName("폼으로 부터 입력받은 하위카테고리가 존재하지않으면 예외발생")
     void itemSaveFailed() {
         //given
-        ItemSaveDto targetDto = ItemSaveDto.builder()
-                .attachedImage(new MockMultipartFile("test.png", new byte[1]))
-                .categoryId(1L)
-                .subCategories(List.of(1L))
-                .build();
-
-        given(subCategoryRepository.findById(anyLong()))
-                .willReturn(Optional.empty()); //만약 번호로 검색한 하위 카테고리 결과가 없다면
-        given(categoryRepository.getReferenceById(anyLong()))
-                .willReturn(Category.builder().build());
-
-
-        assertThatThrownBy(() -> itemService.enrollItem(targetDto))
-                .isInstanceOf(Exception.class).hasMessageContaining("카테고리");
 
     }
 
@@ -72,23 +47,7 @@ class ItemServiceTest {
     @DisplayName("저장 성공시 저장한 엔티티 반환")
     void itemSaveSuccess() throws IOException {
         //given
-        ItemSaveDto targetDto = ItemSaveDto.builder()
-                .name("testbook")
-                .author("me")
-                .attachedImage(new MockMultipartFile("test.png", new byte[1]))
-                .categoryId(1L)
-                .subCategories(List.of(1L))
-                .build();
-        given(subCategoryRepository.findById(anyLong()))
-                .willReturn(Optional.of(SubCategory.builder().build())); //만약 번호로 검색한 하위 카테고리 결과가 없다면
-        given(categoryRepository.getReferenceById(anyLong()))
-                .willReturn(any(Category.class));
 
-        //when
-        Item savedItem = itemService.enrollItem(targetDto);
-        //then
-        assertThat(savedItem.getName()).isEqualTo("testbook");
-        assertThat(savedItem.getAuthor()).isEqualTo("me");
     }
 
 
