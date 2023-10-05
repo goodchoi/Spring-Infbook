@@ -1,4 +1,4 @@
-package infbook.infbook.abstractUtils;
+package infbook.infbook.abstractTest;
 
 import infbook.infbook.domain.category.domain.Category;
 import infbook.infbook.domain.category.domain.SubCategory;
@@ -22,20 +22,23 @@ import infbook.infbook.domain.shoppingcart.domain.ShoppingCart;
 import infbook.infbook.domain.shoppingcart.domain.ShoppingItem;
 import infbook.infbook.domain.shoppingcart.repository.ShoppingCartRepository;
 import infbook.infbook.domain.shoppingcart.repository.ShoppingItemRepository;
+import infbook.infbook.utils.TestConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.Transactional;
 
 import static infbook.infbook.utils.models.*;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.*;
 
 @Slf4j
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@Transactional
+@Import({TestConfig.class})
 @DataJpaTest
-public abstract class RepostoryUtil {
+public abstract class RepostoryTest {
 
     @Autowired
     protected MemberRepository memberRepository;

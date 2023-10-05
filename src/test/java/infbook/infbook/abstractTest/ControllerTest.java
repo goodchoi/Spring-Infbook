@@ -1,26 +1,29 @@
-package infbook.infbook.abstractUtils;
+package infbook.infbook.abstractTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import infbook.infbook.domain.category.repository.CategoryRepository;
+import infbook.infbook.domain.category.repository.SubCategoryRepository;
+import infbook.infbook.domain.item.repository.ItemAdminRepository;
 import infbook.infbook.domain.member.domain.Member;
-import infbook.infbook.domain.member.domain.UserLevel;
 import infbook.infbook.domain.member.repository.MemberRepository;
 import infbook.infbook.utils.AutoConfigureMockMvcWithEncoding;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import static infbook.infbook.utils.models.*;
 
 @Slf4j
-@SpringBootTest()
+@SpringBootTest
 @Transactional
 @AutoConfigureMockMvcWithEncoding
-@ActiveProfiles("test")
-public abstract class ControllerUtil {
+public abstract class ControllerTest {
+
 
     @Autowired
     protected MockMvc mockMvc;
@@ -29,14 +32,30 @@ public abstract class ControllerUtil {
     protected MemberRepository memberRepository;
 
     @Autowired
+    protected ItemAdminRepository itemAdminRepository;
+
+    @Autowired
+    protected CategoryRepository categoryRepository;
+
+    @Autowired
+    protected SubCategoryRepository subCategoryRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
     protected ObjectMapper objectMapper;
 
-    protected final String savedMemberId = "test";
+    protected final String savedMemberId = "test2133";
+
+    protected Member savedMember;
+
 
     @BeforeEach
-    void setupLogin() {
-        Member savedMember = Member.builder()
-                .accountId(savedMemberId).password("123")
+    void setupMember() {
+        this.savedMember = Member.builder()
+                .accountId(savedMemberId)
+                .password(bCryptPasswordEncoder.encode(MEMBER_PASSWORD))
                 .name(MEMBER_NAME)
                 .birthDate(MEMBER_BIRTHDATE)
                 .email(MEMBER_EMAIL)
@@ -47,5 +66,4 @@ public abstract class ControllerUtil {
 
         memberRepository.save(savedMember);
     }
-
 }
