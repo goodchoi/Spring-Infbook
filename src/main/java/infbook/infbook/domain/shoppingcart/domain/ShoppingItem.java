@@ -1,8 +1,6 @@
 package infbook.infbook.domain.shoppingcart.domain;
 
 import infbook.infbook.domain.item.domain.Item;
-import infbook.infbook.exception.InsufficentQuantityException;
-import infbook.infbook.exception.InvalidQuantityException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
