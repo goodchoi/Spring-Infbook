@@ -54,7 +54,7 @@ public class models {
     public static final Long MEMBER_ID = 1L;
     public static final String MEMBER_NAME = "테스트멤버이름";
     public static final String MEMBER_ACCOUNTID = "test1234";
-    public static final String MEMBER_PASSWORD = "12333233";
+    public static final String MEMBER_PASSWORD = "adsfadsf22!";
     public static final String MEMBER_EMAIL = "test@test.com";
     public static final LocalDate MEMBER_BIRTHDATE = LocalDate.of(1995, 2, 22);
     public static final String MEMBER_TELEPHONE = "010-0000-000";
