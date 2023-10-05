@@ -70,6 +70,11 @@ dependencies {
 
 }
 
+//jar 빌드시 생성되 plain archive jar 생성 금지
+jar {
+	enabled = false
+}
+
 bootJar {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
