@@ -64,7 +64,7 @@ public class ShoppingCartService {
             if (shoppingItem.getQuantity() + cartPostRequest.getRequestQuantity() > findItem.getStockQuantity()) {
                 return "3";
             }
-            shoppingItem.changeQuantity(cartPostRequest.getRequestQuantity());
+            shoppingItem.changeQuantity(cartPostRequest.getRequestQuantity() + shoppingItem.getQuantity() );
             return "2";
         }
 
