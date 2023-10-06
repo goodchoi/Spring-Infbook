@@ -13,8 +13,13 @@ function index_button(){
     }
 }
 
-function ajaxAddCart(itemId) {
+function ajaxAddCart(itemId,authenticated) {
+    if (!authenticated) {
+        window.location.href = '/member/login'
+        return
+    }
     let requestQuantity = 1
+
     if ($('#requestQuantity').val() > 0) {
         requestQuantity = $('#requestQuantity').val()
     }
@@ -44,7 +49,7 @@ function ajaxAddCart(itemId) {
             } else if(result == 3) {
                 $("#modal_text").text('재고가 충분하지 않습니다.')
             } else {
-                window.location.href = '/login'
+                window.location.href = '/member/login'
             }
 
         },

@@ -193,9 +193,9 @@
                     </div>
                     <div class="col-md-3  m-auto text-center">
                         <div class="mb-3">
-                            <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal" data-bs-target="#exampleModal" id="addToCart" th:onclick="|ajaxAddCart(${cont.id})|">장바구니</button>
+                            <button type="button" class="btn btn-primary" style="width: 100px" data-bs-toggle="modal" data-bs-target="#exampleModal" id="addToCart" th:onclick="|ajaxAddCart(${cont.id},${#authorization.expression('hasAnyRole(''ROLE_USER'',''ROLE_ADMIN'')') ? true : false})|">장바구니</button>
                         </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'',''ROLE_ADMIN'')') ? true : false}" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered mx-auto">
                                 <div class="modal-content border_box2 d-flex flex-column mx-auto">
                                     <div class="p-3"></div>
