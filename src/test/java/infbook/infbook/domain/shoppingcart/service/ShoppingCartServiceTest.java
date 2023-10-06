@@ -122,7 +122,7 @@ class ShoppingCartServiceTest extends ServiceTest {
 
         //then
         //행위에 대한 검증 - shoppingItem 엔티티의 수량을 변경하며 DirtyChecking으로 update가 이루어진다.
-        then(shoppingItem).should().changeQuantity(shoppingItem.getQuantity() + cartPostRequest.getRequestQuantity());
+        then(shoppingItem).should().changeQuantity(1 + cartPostRequest.getRequestQuantity());
 
         assertThat(result).isEqualTo("2");
     }

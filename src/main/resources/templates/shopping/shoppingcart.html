@@ -5,28 +5,20 @@
 
 <head>
     <title>장바구니</title>
-    <th:block layout:fragment="csrf">
-        <meta name="_csrf" th:content="${_csrf?.token}"/>
-        <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
-    </th:block>
-    <script type="text/javascript">
-        var header = $("meta[name='_csrf_header']").attr('content');
-        var token = $("meta[name='_csrf']").attr('content');
-
+    <script th:inline="javascript">
 
         function change_quantity_request(cont_idx, add) {
+            let quantityInput = $('#request_quantity' + cont_idx);
+            let quantityTag = $('#quantity' + cont_idx);
 
-            let quantityInput = $('#request_quantity' + cont_idx)
-            let quantityTag = $('#quantity' + cont_idx)
-
-            const before_quantity = quantityInput.val()
-            let request_quantity = parseInt(before_quantity) + parseInt(add)
+            const before_quantity = quantityInput.val();
+            let request_quantity = parseInt(before_quantity) + parseInt(add);
 
             if (request_quantity < 1) {
                 return
             }
 
-            let spItemId = $('#spItemId' + cont_idx).val()
+            let spItemId = $('#spItemId' + cont_idx).val();
 
             let jsonData = {
                 "shoppingItemId": spItemId,
@@ -38,9 +30,7 @@
                 contentType: 'application/json',
                 dataType: "json",
                 data: JSON.stringify(jsonData),
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
+
                 success: function (result) {
                     if (result.result === "success") {
                         if ($('#insufficent' + cont_idx).length > 0) {
@@ -67,7 +57,7 @@
                 error: function (e) {
                     alert(e)
                 }
-            })
+            });
         }
 
         function shake(cont_idx) {
@@ -88,9 +78,6 @@
                 contentType: 'application/json',
                 dataType: "text",
                 data: JSON.stringify({"spItemId": spItemId}),
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
                 success: function (result) {
                     $('#content' + cont_no).remove()
                     let count_tag = $("#shopping_cart_count")
@@ -250,7 +237,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1 m-auto">
+                            <div class="col-md-2 m-auto me-1 ">
                                 <button type="button" class="btn btn-light"
                                         th:onclick="|delete_shopping_item(${itemStat.index})|">삭제
                                 </button>

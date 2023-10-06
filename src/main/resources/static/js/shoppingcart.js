@@ -1,5 +1,4 @@
-var header = $("meta[name='_csrf_header']").attr('content');
-var token = $("meta[name='_csrf']").attr('content');
+
 function index_button(){
     let target = $('#collapseExample')
     if (target.hasClass('show')) {
@@ -35,9 +34,6 @@ function ajaxAddCart(itemId,authenticated) {
         contentType : 'application/json',
         dataType : "text",
         data : JSON.stringify(jsonData),
-        beforeSend : function (xhr) {
-            xhr.setRequestHeader(header, token);
-        },
         success: function (result) {
             if (result == 1) {
                 $("#modal_text").text('선택하신 상품이 장바구니에 담겼습니다.장바구니로 이동하시겠습니까?')
