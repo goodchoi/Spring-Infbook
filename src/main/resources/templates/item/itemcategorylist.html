@@ -5,10 +5,6 @@
 
 <head>
     <title layout:fragment="title">상품 목록 - 카테고리</title>
-    <th:block layout:fragment="csrf">
-        <meta name="_csrf" th:content="${_csrf?.token}"/>
-        <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
-    </th:block>
     <script>
         function submitFormbyPage(page) {
             $('#page').val(page)

@@ -5,10 +5,6 @@
       layout:decorate="~{layout/layout.html}" xmlns="http://www.w3.org/1999/html">
 <head>
     <title layout:fragment="title">상세 상품</title>
-    <th:block layout:fragment="csrf">
-        <meta name="_csrf" th:content="${_csrf?.token}"/>
-        <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
-    </th:block>
 
     <script src="/js/shoppingcart.js"></script>
 </head>
