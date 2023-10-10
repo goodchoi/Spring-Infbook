@@ -26,7 +26,7 @@ import static infbook.infbook.global.jwt.JwtProperties.*;
 
 @RequiredArgsConstructor
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig {
 
     //private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
