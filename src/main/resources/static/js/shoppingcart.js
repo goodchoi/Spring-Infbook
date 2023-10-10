@@ -1,4 +1,3 @@
-
 function index_button(){
     let target = $('#collapseExample')
     if (target.hasClass('show')) {

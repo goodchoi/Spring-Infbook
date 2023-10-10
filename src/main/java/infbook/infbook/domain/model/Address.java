@@ -12,9 +12,9 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Address {
 
-    @Column(nullable = false, columnDefinition = "varchar(6)")
+    @Column(columnDefinition = "varchar(6)")
     private String zipcode;
-    @Column(nullable = false, columnDefinition = "varchar(15)")
+    @Column(columnDefinition = "varchar(15)")
     private String street;
     @Column( columnDefinition = "varchar(100)")
     private String city;

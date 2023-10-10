@@ -25,7 +25,7 @@ class ShoppingCartControllerTest extends ControllerTest {
     void ajaxAddItemToCart_AjaxItemNotFoundException() throws Exception {
 
         String token = JwtUtils.createToken(savedMember);
-        Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME,token);
+        Cookie cookie = new Cookie(JwtProperties.JWT_COOKIE_NAME,token);
 
         mockMvc.perform(post("/cart")
                         .characterEncoding("UTF-8")

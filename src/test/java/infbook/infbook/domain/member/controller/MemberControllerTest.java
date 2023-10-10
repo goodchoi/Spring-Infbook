@@ -4,13 +4,19 @@ import infbook.infbook.abstractTest.ControllerTest;
 
 import infbook.infbook.global.jwt.JwtProperties;
 import infbook.infbook.global.jwt.JwtUtils;
+import infbook.infbook.global.util.CookieUtil;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.ObjectUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Objects;
 
 import static infbook.infbook.utils.models.MEMBER_PASSWORD;
 import static org.assertj.core.api.Assertions.*;
@@ -55,6 +61,7 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .characterEncoding(StandardCharsets.UTF_8)
                         .with(csrf())
+
                 )
                 .andExpect(redirectedUrl("/member/login"));
 
@@ -66,6 +73,8 @@ class MemberControllerTest extends ControllerTest {
     void duplicate_Check() throws Exception {
         mockMvc.perform(get("/member/check/" + savedMember.getAccountId())
                         .accept(MediaType.TEXT_PLAIN)
+                        .with(csrf())
+
                 )
                 .andExpect(result -> {
                     assertEquals("00", result.getResponse().getContentAsString()); //"00" 중복
@@ -77,6 +86,8 @@ class MemberControllerTest extends ControllerTest {
     void duplicate_Check_Success() throws Exception {
         mockMvc.perform(get("/member/check/" + "anonymous112")
                         .accept(MediaType.TEXT_PLAIN)
+                        .with(csrf())
+
                 )
                 .andExpect(result -> {
                     assertEquals("01", result.getResponse().getContentAsString()); //"01" 성공
@@ -90,10 +101,36 @@ class MemberControllerTest extends ControllerTest {
                         .param("username", savedMember.getAccountId())
                         .param("password", MEMBER_PASSWORD)
                         .with(csrf())
+
                 )
                 .andExpect(result -> {
-                    assertThat(result.getResponse().getCookie(JwtProperties.COOKIE_NAME)).isNotNull()
+                    assertThat(result.getResponse().getCookie(JwtProperties.JWT_COOKIE_NAME)).isNotNull()
                             .extracting(cookie -> JwtUtils.getUserId(cookie.getValue())).isEqualTo(savedMember.getId());
+                })
+                .andExpect(redirectedUrl("/"));
+        // 로그인 성공으로 발급된 JWT가 쿠키로 넘어오는 지 확인하고, JWT가 실제 로그인한 유저로 발급된 것인지에대한 유효성확인.
+
+        //.andDo(print());
+    }
+
+    @DisplayName("Oauth 신규 가입시 필요한 추가정보를 등록할 수 있다.")
+    @Test
+    void moreInfo() throws Exception {
+        mockMvc.perform(post("/member/moreInfo")
+                        .cookie(new Cookie(JwtProperties.JWT_COOKIE_NAME,JwtUtils.createToken(oauthTempMember)))
+                        .params(getAddInfoForm())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .with(csrf())
+                )
+                .andExpect(result -> {
+                    assertThat(
+                            Arrays.stream(result.getResponse().getCookies())
+                            .filter(cookie -> cookie.getName().equals(JwtProperties.JWT_COOKIE_NAME))
+                            .filter(cookie -> !ObjectUtils.isEmpty(cookie.getValue()))
+                            .findFirst().get()).isNotNull()
+                            .extracting(cookie -> JwtUtils.getUserId(cookie.getValue()))
+                            .isEqualTo(oauthTempMember.getId());
                 })
                 .andExpect(redirectedUrl("/"));
         // 로그인 성공으로 발급된 JWT가 쿠키로 넘어오는 지 확인하고, JWT가 실제 로그인한 유저로 발급된 것인지에대한 유효성확인.
@@ -115,6 +152,18 @@ class MemberControllerTest extends ControllerTest {
         data.add("street", "테스트");
         data.add("birthDate", "20330302");
 
+        return data;
+    }
+
+    private MultiValueMap<String, String> getAddInfoForm() {
+        MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
+        data.add("name", "최동현");  //이름을 입력하지 않은 경우
+        data.add("telephone", "01092053502");
+        data.add("city", "서울");
+        data.add("zipcode", "23444");
+        data.add("detailedAddress", "309호");
+        data.add("street", "테스트");
+        data.add("birthDate", "20330302");
         return data;
     }
 
