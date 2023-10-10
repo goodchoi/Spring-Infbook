@@ -3,13 +3,18 @@ package infbook.infbook.global.jwt;
 
 import infbook.infbook.domain.member.domain.Member;
 import infbook.infbook.domain.model.Address;
+import infbook.infbook.global.util.CookieUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.util.Pair;
 
 import java.security.Key;
 import java.util.Date;
+
+import static infbook.infbook.global.jwt.JwtProperties.*;
 
 /**
  * JWT와 관련된 모든 유틸메서드를 정의
@@ -56,10 +61,16 @@ public class JwtUtils {
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + JwtProperties.EXPIRATION_TIME))
+                .setExpiration(new Date(now.getTime() + JWT_EXPIRATION_TIME))
                 .setHeaderParam(JwsHeader.KEY_ID, key.getFirst())
                 .signWith(key.getSecond())
                 .compact();
+    }
+
+    public static Long getUserIdFromCooke(HttpServletRequest request) {
+        String token = CookieUtil.getCookie(request, JWT_COOKIE_NAME).map(Cookie::getValue)
+                .orElseThrow(() -> new IllegalArgumentException("JWT 토큰이 없습니다."));
+        return JwtUtils.getUserId(token);
     }
 
 

@@ -1,12 +1,16 @@
 package infbook.infbook.global.jwt;
 
+import infbook.infbook.exception.oauth.OAuthNewUserException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AnonymousAuthenticationProvider;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,7 +29,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         try {
             //cookie에서 Token을 꺼낸다.
             token = Arrays.stream(request.getCookies())
-                    .filter(cookie -> cookie.getName().equals(JwtProperties.COOKIE_NAME))
+                    .filter(cookie -> cookie.getName().equals(JwtProperties.JWT_COOKIE_NAME))
                     .findFirst()
                     .map(Cookie::getValue)
                     .orElse(null);
@@ -34,11 +38,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
         if (token != null) {
             try {
-                Authentication authentication = this.getUserNamePAsswordAuthenticationToken(token);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                if(!JwtUtils.getRole(token).equals("ROLE_ANONYMOUS")) {
+                    Authentication authentication = this.getUserNamePAsswordAuthenticationToken(token);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             } catch (Exception e) {
-                //실패시 쿠키 초기화
-                Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
+                Cookie cookie = new Cookie(JwtProperties.JWT_COOKIE_NAME, null);
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }

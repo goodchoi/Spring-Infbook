@@ -2,6 +2,7 @@ package infbook.infbook.domain.member.service;
 
 import infbook.infbook.domain.member.domain.Member;
 import infbook.infbook.domain.member.dto.MemberSignupDto;
+import infbook.infbook.domain.member.dto.MemberUpdateInfo;
 import infbook.infbook.domain.member.repository.MemberRepository;
 import infbook.infbook.domain.shoppingcart.domain.ShoppingCart;
 import infbook.infbook.domain.shoppingcart.repository.ShoppingCartRepository;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -18,6 +21,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final BCryptPasswordEncoder encoder;
+
+
 
     public Member join(MemberSignupDto memberDto) {
 
@@ -30,6 +35,12 @@ public class MemberService {
         return createdMember;
     }
 
+    public Member updateOauthUserInfo(Long userId, MemberUpdateInfo memberUpdateInfo) {
+        Member findMember = memberRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%s에 해당하는 User가 없습니다.",String.valueOf(userId))));
+        findMember.updateAdditionalInfo(memberUpdateInfo);
+        return findMember;
+    }
 
     /**
      * ajax Id 중복검사 비즈니스 로직 메서드

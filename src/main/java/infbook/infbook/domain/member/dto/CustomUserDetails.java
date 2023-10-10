@@ -6,31 +6,38 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Getter
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
     private final Member member;
+    private Map<String, Object> attributes;
 
     public CustomUserDetails(Member member) {
         this.member = member;
     }
 
+    //Oauth2용 객체 생성
+    public static OAuth2User createOauthUserDetails(Member member, Map<String, Object> attributes) {
+        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        customUserDetails.setAttributes(attributes);
+        return customUserDetails;
+    }
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();
 
-        if (this.member.getUserLevel().equals(UserLevel.ROLE_ADMIN)) {
-            list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else {
-            list.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
-        }
-
+        list.add(new SimpleGrantedAuthority(this.member.getUserLevel().toString()));
         return list;
     }
+
 
     @Override
     public String getPassword() {
@@ -39,7 +46,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return member.getName();
+        return member.getAccountId();
     }
 
     @Override
@@ -60,5 +67,21 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    //Oatuh2User Override!
+    @Override
+    public String getName() {
+        return String.valueOf(this.member.getId());
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
     }
 }

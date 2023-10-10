@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static infbook.infbook.global.jwt.JwtProperties.*;
+
 
 @Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -52,8 +54,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Member findMember = principal.getMember();
         String token = JwtUtils.createToken(findMember);
         //쿠키 생성
-        Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, token);
-        cookie.setMaxAge(JwtProperties.EXPIRATION_TIME);
+        Cookie cookie = new Cookie(JWT_COOKIE_NAME, token);
+        cookie.setMaxAge(JWT_EXPIRATION_TIME);
         cookie.setPath("/");
         response.addCookie(cookie);
         super.successfulAuthentication(request,response,chain,authResult);

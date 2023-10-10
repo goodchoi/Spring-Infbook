@@ -4,12 +4,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout.html}">
 
-
 <head>
     <title layout:fragment="title">로그인</title>
-</head>
-
-
 <section>
     <th:block layout:fragment="content">
         <main class="form-signin ">
@@ -18,11 +14,13 @@
                     <h1 class="h3 mb-3 fw-bold">로그인</h1>
 
                     <div class="form-floating">
-                        <input type="text" class="form-control" name="username" id="floatingInput" placeholder="id를 입력하세요"/>
+                        <input type="text" class="form-control" name="username" id="floatingInput"
+                               placeholder="id를 입력하세요"/>
                         <label for="floatingInput">id</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password"/>
+                        <input type="password" class="form-control" name="password" id="floatingPassword"
+                               placeholder="Password"/>
                         <label for="floatingPassword">Password</label>
                     </div>
 
@@ -32,7 +30,12 @@
                         </a>
                     </div>
 
-                <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+                    <button class="w-100 btn btn-lg btn-primary fs-6" type="submit">로그인</button>
+                    <div class="mt-4">
+                        <a id="kakao-login-btn" class="w-100" href="/oauth2/authorize/kakao?redirect_uri=http://localhost:8080/">
+                            <img src="/img/kakaologin.png" style="width: 300px; ;object-fit: scale-down">
+                        </a>
+                    </div>
                 </form>
             </div>
             <div th:if="${error}" class="text-center mt-5">
