@@ -32,7 +32,7 @@
 
                     <button class="w-100 btn btn-lg btn-primary fs-6" type="submit">로그인</button>
                     <div class="mt-4">
-                        <a id="kakao-login-btn" class="w-100" href="/oauth2/authorize/kakao?redirect_uri=http://localhost:8080/">
+                        <a id="kakao-login-btn" class="w-100" th:href="|/oauth2/authorize/kakao?redirect_uri=${@environment.getProperty('project.url')}oauth2/callback/kakao|">
                             <img src="/img/kakaologin.png" style="width: 300px; ;object-fit: scale-down">
                         </a>
                     </div>
