@@ -46,7 +46,7 @@ spring:
           kakao:
             client-id: 9c7b659052a5c2efddde496667f27ec1
             client-secret: tmaKzyjSen95EkroHMn9AMEpOvKr3bkl
-            redirect-uri: ${AWS_URL}oauth2/callback/kakao
+            redirect-uri: ${AWS_URL}/oauth2/callback/kakao
             authorization-grant-type: authorization_code
             scope:
               - account_email
@@ -163,7 +163,7 @@ cloud:
       secretKey: ${AWS_SECRET_ACCESS_KEY}
 
 project:
-  url: http://localhost:8080/
+  url: http://localhost:8080
 
 #file:
 #  dir: /Users/choedonghyeon/Desktop/Spring-Infbook/src/main/resources/static/img/items/

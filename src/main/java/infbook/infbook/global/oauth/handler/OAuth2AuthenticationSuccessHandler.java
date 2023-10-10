@@ -57,7 +57,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         if(principal.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .anyMatch(authority -> authority.equals(UserLevel.ROLE_ANONYMOUS.toString()))) {
-            targetUrl = redirectUrl + "member/moreInfo";
+            targetUrl = redirectUrl + "/member/moreInfo";
         }
         String jwt = JwtUtils.createToken(principal.getMember());
         Cookie cookie = new Cookie(JWT_COOKIE_NAME, jwt);
