@@ -77,17 +77,19 @@ create table member
     created_at       datetime(6)  null,
     created_by       varchar(255) null,
     updated_at       datetime(6)  null,
-    account_id       varchar(60)  not null,
+    account_id       varchar(60)  null,
     city             varchar(100) null,
     detailed_address varchar(100) null,
-    street           varchar(100)  not null,
-    zipcode          varchar(6)   not null,
-    birth_date       datetime     not null,
-    email            varchar(50)  not null,
-    name             varchar(60)  not null,
-    password         varchar(100) not null,
-    telephone        varchar(15)  not null,
-    user_level       varchar(255) null
+    street           varchar(100) null,
+    zipcode          varchar(6)   null,
+    birth_date       datetime     null,
+    email            varchar(50)  unique not null,
+    name             varchar(60)  null,
+    password         varchar(100) null,
+    telephone        varchar(15)  null,
+    user_level       varchar(255) not null,
+    o_auth2id        varchar(255) null,
+    provider         varchar(255) null
 );
 
 create table orders
