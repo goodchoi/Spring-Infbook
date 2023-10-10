@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title layout:fragment="title">회원가입</title>
+
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/js/daumAddress.js"></script>
+</head>
+
+<th:block layout:fragment="content">
+    <div class="w-50 container py-4  ">
+        <header class="pb-3 mb-4 border-bottom">
+            <span class="fs-4 fw-bold">회원 가입</span>
+        </header>
+
+        <form class="form-control" id="moreInfoForm" th:object="${member}" action="/member/moreInfo" method="post">
+            <div class="form-control-plaintext mb-3">
+                <label for="name">성명</label>
+                <input type="text" class="form-control"
+                       placeholder="이름을 입력하세요" id="name" th:field="*{name}">
+                <div th:if="${#fields.hasErrors('name')}">
+                    <p class="error" th:text="${#fields.errors('name').get(0)}"></p>
+                </div>
+            </div>
+
+            <div class="form-control-plaintext mb-3">
+                <label for="date">생년월일</label>
+                <input type="text" class="form-control" id="date" th:field="*{birthDate}" placeholder="생년월일을 입력하세요 ex(19950222)"/>
+                <div th:if="${#fields.hasErrors('birthDate')}">
+                    <p class="error" th:text="${#fields.errors('birthDate').get(0)}"></p>
+                </div>
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label for="telephone">전화번호</label>
+                <input type="tel" class="form-control"
+                       placeholder="전화번호를 입력하세요" id="telephone" th:field="*{telephone}">
+                <div th:if="${#fields.hasErrors('telephone')}">
+                    <p class="error" th:text="${#fields.errors('telephone').get(0)}"></p>
+                </div>
+            </div>
+            <div class="form-control-plaintext mb-3">
+                <label for="sample6_postcode">주소</label>
+                <div class="row mb-2">
+                    <div class="col">
+                        <input type="text" class="form-control " id="sample6_postcode" th:field="*{zipcode}"
+                               placeholder="우편번호">
+                    </div>
+                    <div class="col">
+                        <input type="button" class="btn btn-light" onclick="sample6_execDaumPostcode(0)" value="우편번호 찾기">
+                    </div>
+
+                </div>
+                <input type="text" class="form-control mb-2" id="sample6_address" th:field="*{city}"
+                       placeholder="주소">
+                <input type="text" class="form-control mb-2" id="sample6_extraAddress" th:field="*{street}"
+                       placeholder="동">
+                <input type="text" class="form-control " id="sample6_detailAddress"
+                       th:field="*{detailedAddress}" placeholder="상세주소">
+                <div th:if="${#fields.hasErrors('zipcode')}">
+                    <p class="error" th:text="${#fields.errors('zipcode').get(0)}"></p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</th:block>
+
+
+</html>
