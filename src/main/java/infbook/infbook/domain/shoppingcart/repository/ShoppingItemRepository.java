@@ -20,7 +20,7 @@ public interface ShoppingItemRepository extends JpaRepository<ShoppingItem, UUID
             "(select sc.id from ShoppingCart sc where sc.member.id =:memberId)")
     void deleteAllInShoppingCart(@Param(value = "memberId") Long memberId);
 
-    @Query("select count(si.id) from ShoppingItem si join ShoppingCart sc where sc.member.id =:memberId")
+    @Query("select count(si.id) from ShoppingItem si join ShoppingCart sc on si.shoppingCart.id = sc.id where sc.member.id =:memberId")
     int countShoppingItemByMember(@Param(value = "memberId") Long memberId);
 
 //    @Query("select si from ShoppingItem si where si.shoppingCart.id =: shoppingCartId and si.item.id =: itemId")
