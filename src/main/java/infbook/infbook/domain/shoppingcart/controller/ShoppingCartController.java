@@ -29,12 +29,7 @@ public class ShoppingCartController {
     @GetMapping(value = "/cart")
     public String getShoppingCart(@AuthenticationPrincipal JwtPrincipal user, Model model) {
 
-        if (Objects.isNull(user.getUserId())) {
-            throw new IllegalStateException("로그인 되어 있지않은 사용자 입니다.");
-        }
-
         List<CartItemDto> shoppingItemList = shoppingCartService.getShoppingCartListByLoginUser(user.getUserId());
-
         model.addAttribute("itemList", shoppingItemList);
 
         return "shopping/shoppingcart";
@@ -49,8 +44,7 @@ public class ShoppingCartController {
 
         String result = shoppingCartService.addShoppingCartItem(cartPostRequest);
         if (result.equals("1")) { //장바구니에 새로 추가하는 경우 기존 의 장바구니 개수를 다시 갱신하기 위해 세션 초기화
-            int shoppingCartCount = (int) request.getSession().getAttribute("shopping_cart_count");
-            request.getSession().setAttribute("shopping_cart_count", shoppingCartCount + 1);
+            shoppingCartService.removeShoppingItemCountCache(user.getUserId());
         }
 
         return result;
@@ -64,10 +58,9 @@ public class ShoppingCartController {
 
     @ResponseBody
     @DeleteMapping(value = "/cart")
-    public String ajaxDeleteItemInCart(@RequestBody Map<String, String> param, HttpServletRequest request) {
-        shoppingCartService.deleteShoppingItem(UUID.fromString(param.get("spItemId")));
-        int shoppingCartCount = (int) request.getSession().getAttribute("shopping_cart_count");
-        request.getSession().setAttribute("shopping_cart_count", shoppingCartCount - 1);
+    public String ajaxDeleteItemInCart(@RequestBody Map<String, String> param, HttpServletRequest request,@AuthenticationPrincipal JwtPrincipal user) {
+        shoppingCartService.deleteShoppingItem(UUID.fromString(param.get("spItemId")),user.getUserId());
+        shoppingCartService.removeShoppingItemCountCache(user.getUserId());
         return "ok";
     }
 }

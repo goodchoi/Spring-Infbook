@@ -16,7 +16,7 @@ public class CacheConfig {
     @Bean
     public CacheManager cacheManager() {
         SimpleCacheManager simpleCacheManager = new SimpleCacheManager();
-        simpleCacheManager.setCaches(List.of(new ConcurrentMapCache("bestSellerCache")));
+        simpleCacheManager.setCaches(List.of(new ConcurrentMapCache("bestSellerCache"),new ConcurrentMapCache("shoppingCount")));
         return simpleCacheManager;
     }
 }

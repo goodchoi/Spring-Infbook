@@ -63,7 +63,7 @@ public class MemberController {
                            HttpServletResponse response) {
 
         if (bindingResult.hasErrors()) {
-            return "/login/moreinfo";
+            return "login/moreinfo";
         }
 
 

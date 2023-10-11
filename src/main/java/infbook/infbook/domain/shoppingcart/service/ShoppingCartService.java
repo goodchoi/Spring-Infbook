@@ -15,6 +15,9 @@ import infbook.infbook.exception.ajax.AjaxItemNotFoundException;
 import infbook.infbook.exception.ajax.AjaxShoppingItemNotFoundException;
 import infbook.infbook.global.exception.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -35,6 +39,18 @@ public class ShoppingCartService {
     public List<CartItemDto> getShoppingCartListByLoginUser(Long id) {
         return shoppingItemRepository.findShoppingItemByMemberId(id);
     }
+
+    @Cacheable(cacheNames = "shoppingCount")
+    public int getShoppingItemCount(Long memberId){
+        log.info("{}에대한 장바구니 상품 갯수 캐쉬 ",memberId);
+        return shoppingItemRepository.countShoppingItemByMember(memberId);
+    }
+
+    @CacheEvict(value = "shoppingCount")
+    public void removeShoppingItemCountCache(Long memberId){
+        log.info("{}에대한 장바구니 상품 캐쉬 제거 ",memberId);
+    }
+
 
     /**
      * memberId 검증 -ok
@@ -73,7 +89,6 @@ public class ShoppingCartService {
                 .item(findItem)
                 .quantity(cartPostRequest.getRequestQuantity()).build();
         shoppingItemRepository.save(newShoppingItem);
-
         return "1";
     }
 
@@ -93,7 +108,7 @@ public class ShoppingCartService {
         return CartPutResponse.insufficientStockPutResponse(stockQuantity);
     }
 
-    public String deleteShoppingItem(UUID shoppingItemId) {
+    public String deleteShoppingItem(UUID shoppingItemId,Long memberId) {
         ShoppingItem shoppingItem = getShoppingItem(shoppingItemId);
         shoppingItemRepository.delete(shoppingItem);
         return "1";
@@ -119,5 +134,4 @@ public class ShoppingCartService {
                         String.format("%s에 해당하는 아이템이 존재하지 않습니다.", itemId),
                         ErrorCode.ITEM_NOT_FOUND));
     }
-
 }

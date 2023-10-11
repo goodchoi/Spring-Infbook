@@ -55,6 +55,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
 
+
         if(principal.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .anyMatch(authority -> authority.equals(UserLevel.ROLE_ANONYMOUS.toString()))) {
             targetUrl = redirectUrl + "/member/moreInfo";

@@ -1,6 +1,7 @@
 package infbook.infbook.domain.order.controller;
 
 import infbook.infbook.domain.member.repository.MemberRepository;
+import infbook.infbook.domain.shoppingcart.service.ShoppingCartService;
 import infbook.infbook.global.jwt.JwtPrincipal;
 import infbook.infbook.domain.model.Address;
 import infbook.infbook.domain.order.domain.Delivery;
@@ -35,13 +36,14 @@ import java.util.*;
 public class OrderController {
 
     private final OrderService orderService;
+    private final ShoppingCartService shoppingCartService;
     private final KaKaoPayService kaKaoPayService;
     private final MemberRepository memberRepository;
 
     @GetMapping("/order")
     public String getOrderForm(@AuthenticationPrincipal JwtPrincipal user, Model model, HttpServletRequest request) {
 
-        if ((int) request.getSession().getAttribute("shopping_cart_count") < 1) {
+        if (shoppingCartService.getShoppingItemCount(user.getUserId()) < 1) {
             return "redirect:/cart";
         }
         List<OrderShoppingItemDto> findItem = orderService.getOrderRequestList(user.getUserId());
@@ -64,13 +66,13 @@ public class OrderController {
     @ResponseBody
     @PostMapping("/order")
     public String requestOrderAndPay(@RequestBody Address address,
-                                     @AuthenticationPrincipal JwtPrincipal userDetails, Model model
+                                     @AuthenticationPrincipal JwtPrincipal user, Model model
             , HttpServletRequest request
     ) {
-        if ((int) request.getSession().getAttribute("shopping_cart_count") < 1) {
+        if ((shoppingCartService.getShoppingItemCount(user.getUserId()) < 1)) {
             return "no_cart";
         }
-        Optional<Order> optioanlCreatedOrder = orderService.insertShoppingCartItemToOrder(userDetails.getUserId(),address);
+        Optional<Order> optioanlCreatedOrder = orderService.insertShoppingCartItemToOrder(user.getUserId(),address);
 
         if (optioanlCreatedOrder.isEmpty()) {
             return "insufficent_stock";
@@ -86,7 +88,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/pay")
-    public String requestPay(@AuthenticationPrincipal JwtPrincipal userDetails,
+    public String requestPay(@AuthenticationPrincipal JwtPrincipal user,
                              @RequestParam("pg_token") String pg_token, @ModelAttribute("tid") String tid
             , @ModelAttribute("oid") String oid
             , @ModelAttribute("address") Address address, SessionStatus sessionStatus, HttpServletRequest request
@@ -95,10 +97,10 @@ public class OrderController {
 
         KaKaoPayResponse kaKaoPayResponse = kaKaoPayService.requestPay(pg_token, tid, oid);
 
-        orderService.completeOrderRequest(oid, kaKaoPayResponse, userDetails.getUserId());
-        request.getSession().removeAttribute("shopping_cart_count");
+        orderService.completeOrderRequest(oid, kaKaoPayResponse, user.getUserId());
 
-        sessionStatus.setComplete();
+        shoppingCartService.removeShoppingItemCountCache(user.getUserId());
+
         redirectAttributes.addFlashAttribute("pay_check", "true");
         //주문완료시 주문완료 페이지로 리다이렉트 되는데 주문이 성공적으로 끝난경우를 표시하기위함. 이 표시가 없는 채로 주문완료 페이지를 요청하면
         //에러페이지로 이동함.

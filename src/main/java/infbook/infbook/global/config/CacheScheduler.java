@@ -15,6 +15,5 @@ public class CacheScheduler {
     @Scheduled(fixedRate = 3600000 )
     @CacheEvict(value = "bestSellerCache")
     public void resetCache(){
-        log.info("캐쉬 초기화");
     }
 }
