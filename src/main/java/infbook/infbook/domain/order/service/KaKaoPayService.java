@@ -102,9 +102,9 @@ public class KaKaoPayService {
         vo.add("quantity", sumQuantity(order.getOrderItems()));
         vo.add("total_amount", String.valueOf(order.getTotalPrice()));
         vo.add("tax_free_amount", "0");
-        vo.add("approval_url", url + "order/pay");
-        vo.add("cancel_url", url + "order/cart");
-        vo.add("fail_url", url + "order/cart");
+        vo.add("approval_url", url + "/order/pay");
+        vo.add("cancel_url", url + "/order/cart");
+        vo.add("fail_url", url + "/order/cart");
 
         return vo;
     }
