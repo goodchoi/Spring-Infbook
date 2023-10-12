@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - main  # push되면 실행될 브랜치를 선택합니다.
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
   workflow_dispatch: # 수동 실행
 
 jobs:
