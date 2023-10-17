@@ -216,9 +216,7 @@
                             </div>
                         </div>
                         <div>
-                            <a href="">
-                                <button class="btn btn-secondary" style="width: 100px">바로구매</button>
-                            </a>
+                            <button type="button" class="btn btn-secondary" style="width: 100px" th:onclick="|ajaxPurchase(${cont.id},${#authorization.expression('hasAnyRole(''ROLE_USER'',''ROLE_ADMIN'')') ? true : false})|">바로구매</button>
                         </div>
                     </div>
 
