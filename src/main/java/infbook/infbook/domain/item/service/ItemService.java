@@ -43,6 +43,31 @@ public class ItemService {
         return itemSingDtoById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"검색하는 상품의 Id가 없습니다."));
     }
 
+    public Page<ItemListDto> getPopularItemOfSubCategeory(String subcategoryName, Pageable pageable) {
+        return itemRepository.
+                searchPopularBySubCategoryName(subcategoryName,PageRequest.of(pageable.getPageNumber(),fixPageSize(pageable.getPageSize())));
+    }
+
+    public Page<ItemListDto> getPopularItemOfCategeory(String categoryName, Pageable pageable) {
+        return itemRepository.searchPopularByCategoryName(categoryName,PageRequest.of(pageable.getPageNumber(),fixPageSize(pageable.getPageSize())));
+    }
+
+    public Page<ItemListDto> getItemOfKeyword(String keyword, Pageable pageable) {
+        return itemRepository.searchItemByKeyWord(keyword, convertPageable(pageable));
+    }
+
+    public Page<ItemListDto> getPopularItemOfKeyword(String keyword, Pageable pageable) {
+        return itemRepository.searchPopularItemByKeyWord(keyword, PageRequest.of(pageable.getPageNumber(),fixPageSize(pageable.getPageSize())));
+    }
+
+    /**
+     * 베스트셀러는 홈화면에서 요청되므로 사용 빈도가 굉장히 높고, 쿼리문 비용이 크기때문에 스프링 로컬 캐시를 사용한다.
+     */
+    @Cacheable(cacheNames = "bestSellerCache")
+    public List<ItemHomeDto> getBestSellers() {
+        return itemRepository.findBestSellers();
+    }
+
     private Pageable convertPageable(Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
         int pageSize = fixPageSize(pageable.getPageSize());
@@ -63,23 +88,5 @@ public class ItemService {
 
     private int fixPageSize(int pageSize){
         return (pageSize == 5 || pageSize == 10) ? pageSize : 5;
-    }
-
-    public Page<ItemListDto> getPopularItemOfSubCategeory(String subcategoryName, Pageable pageable) {
-
-        return itemRepository.
-                searchPopularBySubCategoryName(subcategoryName,PageRequest.of(pageable.getPageNumber(),fixPageSize(pageable.getPageSize())));
-    }
-
-    public Page<ItemListDto> getPopularItemOfCategeory(String categoryName, Pageable pageable) {
-        return itemRepository.searchPopularByCategoryName(categoryName,PageRequest.of(pageable.getPageNumber(),fixPageSize(pageable.getPageSize())));
-    }
-
-    /**
-     * 베스트셀러는 홈화면에서 요청되므로 사용 빈도가 굉장히 높고, 쿼리문 비용이 크기때문에 스프링 로컬 캐시를 사용한다.
-     */
-    @Cacheable(cacheNames = "bestSellerCache")
-    public List<ItemHomeDto> getBestSellers() {
-        return itemRepository.findBestSellers();
     }
 }

@@ -204,4 +204,16 @@ class ItemRepositoryTest extends RepostoryTest {
     }
 
 
+    @Test
+    @DisplayName("이름 키워드로 검색가능")
+    void searchItemByKeyWord() {
+        //given
+        //when
+        Page<ItemListDto> itemPages = itemRepository.searchItemByKeyWord(savedItem.getName()
+                , PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "publicationDate")));
+        //then
+        assertThat(itemPages).hasSize(1);
+        assertThat(itemPages.getContent().get(0).getName()).isEqualTo(savedItem.getName());
+    }
+
 }

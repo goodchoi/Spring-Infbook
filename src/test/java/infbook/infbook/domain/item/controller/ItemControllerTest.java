@@ -160,4 +160,20 @@ class ItemControllerTest extends ControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @DisplayName("상품 검색 - 성공")
+    @Test
+    void search_item_success() throws Exception {
+
+        Long existinItemId = savedItem.getId();
+
+        mockMvc.perform(get("/item/search")
+                        .param("keyword",savedItem.getName()))
+                .andExpect(result ->
+                {
+                    PageImpl<ItemListDto> page = (PageImpl<ItemListDto>) result.getModelAndView().getModel().get("page");
+                    assertThat(page.getNumberOfElements()).isEqualTo(1);
+                })
+                .andExpect(status().isOk());
+    }
+
 }

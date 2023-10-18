@@ -198,6 +198,51 @@ public class ItemRepository {
         return PageableExecutionUtils.getPage(itemList, pageable, countQuery::fetchOne);
     }
 
+    public Page<ItemListDto> searchItemByKeyWord(String keyword, Pageable pageable) {
+        List<ItemListDto> itemList = jpaQueryFactory
+                .select(new QItemListDto(
+                        item.id, item.name, item.subTitle,item.publisher, item.author, item.fileName
+                        , item.publicationDate, item.price
+                ))
+                .from(item)
+                .where(item.name.contains(keyword))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(ordercomplex(pageable))
+                .fetch();
+
+        JPAQuery<Long> countQuery = jpaQueryFactory
+                .select(item.count())
+                .from(item)
+                .where(item.name.contains(keyword));
+        return PageableExecutionUtils.getPage(itemList, pageable, countQuery::fetchOne);
+    }
+
+    public Page<ItemListDto> searchPopularItemByKeyWord(String keyword, Pageable pageable) {
+        List<Tuple> sales = jpaQueryFactory
+                .select(new QItemListDto(
+                        item.id, item.name, item.subTitle, item.publisher, item.author, item.fileName
+                        , item.publicationDate, item.price
+                ), orderItem.quantity.sum().as("sales"))
+                .from(item)
+                .leftJoin(orderItem)
+                .on(orderItem.item.eq(item))
+                .where(item.name.contains(keyword))
+                .groupBy(item.id)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(orderItem.quantity.sum().desc(),item.publicationDate.desc())
+                .fetch();
+
+        List<ItemListDto> itemList = sales.stream().map(t -> t.get(0, ItemListDto.class)).toList();
+
+        JPAQuery<Long> countQuery = jpaQueryFactory
+                .select(item.count())
+                .from(item)
+                .where(item.name.contains(keyword));
+        return PageableExecutionUtils.getPage(itemList, pageable, countQuery::fetchOne);
+    }
+
     /**
      * 판매량이 높은순서로부터 5개의 리스트를 확보한다.
      * 판매량이 같을경우 출간일이 빠른순으로.

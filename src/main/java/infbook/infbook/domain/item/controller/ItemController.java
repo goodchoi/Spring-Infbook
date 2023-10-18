@@ -15,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
@@ -103,5 +105,23 @@ public class ItemController {
     private String getSortingProperty(Pageable pageable) {
         return pageable.getSort().get().findFirst()
                 .orElse(Sort.Order.by("newest")).getProperty();
+    }
+
+    @GetMapping(value = "/item/search")
+    public String searchItem(@ModelAttribute(value = "keyword") String keyword, @PageableDefault(sort = "newest",size = 5)Pageable pageable, Model model){
+
+        String sortingProperty = getSortingProperty(pageable);
+        Page<ItemListDto> page;
+        if (sortingProperty.equals("popular")) {
+            page = itemService.getPopularItemOfKeyword(keyword,pageable);
+        } else {
+            page = itemService.getItemOfKeyword(keyword,pageable);
+        }
+
+        model.addAttribute("sortList",sortList);
+        model.addAttribute("pageSort",sortingProperty);
+        model.addAttribute("page",page);
+
+        return "item/itemsearch";
     }
 }
