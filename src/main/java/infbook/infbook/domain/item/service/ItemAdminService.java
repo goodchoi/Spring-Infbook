@@ -148,7 +148,7 @@ public class ItemAdminService {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(contentType);
 
-            amazonS3.putObject(new PutObjectRequest(bucket, "image/item" + createdName
+            amazonS3.putObject(new PutObjectRequest(bucket, "image/item/" + createdName
                     , multipartFile.getInputStream(), metadata).withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (AmazonServiceException e) {
             e.printStackTrace();
