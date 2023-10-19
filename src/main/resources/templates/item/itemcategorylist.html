@@ -100,8 +100,8 @@
                                 <th:block th:if = "${page.getNumberOfElements() > 0}">
                                     <th:block th:if="${(page.getTotalPages()-1) /5 == page.getPageable().pageNumber / 5}">
                                         <li class="page-item"
-                                            th:each="num : ${#numbers.sequence((page.getPageable().pageNumber/5)*5 + 1
-                                        ,(page.getPageable().pageNumber/5)*5 + page.getTotalPages() % 5)}">
+                                            th:each="num : ${#numbers.sequence((page.getPageable().pageNumber / 5)*5 + 1
+                                        ,page.getTotalPages())}">
                                             <button type="button" class="page-link text-secondary "
                                                     th:classappend="${page.getPageable().pageNumber + 1 == num} ? 'bg-light'"
                                                     th:attr="page = ${num - 1}" th:text="${num}"
