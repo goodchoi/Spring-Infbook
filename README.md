@@ -1,28 +1,18 @@
 # 📖 Infbook
-<img width=220 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/5e50f4c9-3ddb-47f5-96d7-9d17bd0c9cb0>
+<img width=450 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/6aeeb867-30f0-4e04-b0a9-8afa8e4f2b5c>
 
 
 + 프로젝트 URL : http://last-env-1.eba-pmmwigfd.ap-northeast-2.elasticbeanstalk.com/ (2023/10/03 ~ 현재 배포 중)
 
 
 
-## 목차
-[1. 프로젝트 개요](#1-프로젝트-개요)
 
-[2. 프로젝트 상세 화면](#2-프로젝트-상세-화면)
-
-[3. 프로젝트 주요 기능 설명](#3-프로젝트-주요-기능)
-
-[4. 트러블 슈팅](#트러블-슈팅)
-
-[5. 회고](#회고)
-<br>
-
-## 1. 프로젝트 개요
+## 프로젝트 개요
 * #### 프로젝트 주제
     * 개발 서적을 집중적으로 다루는 오로지 개발자를 위한 도서 쇼핑몰 웹 어플리케이션 토이 프로젝트
 * #### 프로젝트 목표
-    * Spring Boot, JPA 등을 학습하며 정리한 내용을 바탕으로 DB 설계 - 구현 - 배포를 경험하는 것을 목표로 한다.
+    * 프로그래밍 활용 능력을 뽐내기 위한 프로젝트가 아닌 학습한 내용에 대한 체화 및 새로운 학습에 초점을 맞춘다.
+    * **Spring Boot, JPA ,Spring Security**를 주요 기술적 목표로 하며, DB 설계 - 구현 - 배포를 **경험하는 것**을 목표로 한다.
     * 기존에 학습한 내용외에 프로젝트에 필요한 기술이나 지식들을 추가적으로 학습하며 프로젝트를 진행한다.
 
 * #### 사용 기술
@@ -64,18 +54,20 @@
 * #### ENTITY MODEL
   <img width=800 src= https://github.com/goodchoi/Spring-Infbook/assets/105799662/614b5053-2f82-4e9e-ac30-8dea42304234>
 
-## 2. 프로젝트 상세 화면
+##  프로젝트 상세 화면
+
+
 |                                                                                                                                                                        |                                                                                                                                                                       |
-|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------:| 
-|           <img width=500 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/9e6e8b7f-8b92-44e4-ab20-130f917c03f4 ><br><center> 홈화면 </center>            | <img width=500 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/3a3c6555-2500-4287-bb31-73c7887402e8 ><br><center> OAuth2 카카오로그인 및 추가 회원가입 </center> |
-|          <img width=500 src =https://github.com/goodchoi/Spring-Infbook/assets/105799662/19b6d003-1e64-484d-bcda-613e6b3b2637 ><br><center> 도서명 검색 </center>           |         <img width=500 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/63f4b9d7-edb4-47ba-9ca2-726ce5a82698 ><br><center> 상품상세 조회 </center>         |   
+|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| <img width=500 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/9e6e8b7f-8b92-44e4-ab20-130f917c03f4 ><br><center> 홈화면 </center>            | <img width=500 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/3a3c6555-2500-4287-bb31-73c7887402e8 ><br><center> OAuth2 카카오로그인 및 추가 회원가입 </center> |
+|  <img width=500 src =https://github.com/goodchoi/Spring-Infbook/assets/105799662/19b6d003-1e64-484d-bcda-613e6b3b2637 ><br><center> 도서명 검색 </center>           |         <img width=500 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/63f4b9d7-edb4-47ba-9ca2-726ce5a82698 ><br><center> 상품상세 조회 </center>         |
 | <img width=500 src =https://github.com/goodchoi/Spring-Infbook/assets/105799662/0931fcab-6480-419f-9492-d2199f0a2784 ><br><center> 카테고리별 및 하위카테고리별 상품 리스트 조회 </center> |    <img width=500 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/4c63b170-6d86-4ba0-95fa-253579270d42 ><br><center> 장바구니에 상품 추가 및 삭제 </center>     |
-|          <img width=500 src =https://github.com/goodchoi/Spring-Infbook/assets/105799662/ef19b01b-3004-4c30-938f-aaa2b73c665a ><br><center> 주문 및 결제 </center>          |          <img width=500 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/349d5304-a567-4bfd-bd81-dab55163b0b7 ><br><center> 에러페이지 </center>          |
+|<img width=500 src =https://github.com/goodchoi/Spring-Infbook/assets/105799662/ef19b01b-3004-4c30-938f-aaa2b73c665a ><br><center> 주문 및 결제 </center>          |          <img width=500 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/349d5304-a567-4bfd-bd81-dab55163b0b7 ><br><center> 에러페이지 </center>          |
+
+<br>
 
 
----
-## <u>작성 예정</u>
-## 3. 프로젝트 주요 기능
-   
-## 4. 트러블 슈팅
-## 5. 회고
+
+
+
+
