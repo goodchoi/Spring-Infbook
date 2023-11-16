@@ -1,60 +1,55 @@
 # 📖 Infbook
-<img width=450 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/6aeeb867-30f0-4e04-b0a9-8afa8e4f2b5c>
+<img width=240 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/4f01c1b1-ae38-4df4-b0bc-e09a187a9321>
 
 
-+ 프로젝트 URL : http://last-env-1.eba-pmmwigfd.ap-northeast-2.elasticbeanstalk.com/ (2023/10/03 ~ 현재 배포 중)
++ 프로젝트 배포 URL : http://last-env-1.eba-pmmwigfd.ap-northeast-2.elasticbeanstalk.com/ (2023/10/03 ~ 현재 배포 중)
 
+## 프로젝트 주제
+개발 서적을 집중적으로 다루는 오로지 개발자를 위한 도서 쇼핑몰 웹 어플리케이션을 구현한 토이 프로젝트입니다. `Spring`,`JPA` ,`Spring Security`
+등 학습한 내용을 바탕으로 기술을 직접 사용해보고자 시작하게 되었습니다. 최종 목표는 설계 - 구현 - 배포를 경험하는 것 입니다. 기존에 학습한 내용 외에 프로젝트에 필요한
+필요한 기술과 지식들을 추가적으로 학습하며 자유롭게 학습을 가지를 뻗어나가게 되었습니다.
 
+## 사용 기술
+###### 백엔드
+![Spring-Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white)
+![SpringSecurity](https://img.shields.io/badge/Spring_Security-6DB33F?style=flat&logo=SpringSecurity&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-665544?style=flat&logo=jpa&logoColor=white)
+![OAUTH2](https://img.shields.io/badge/OAUTH2-335581?style=flat&logo=jpa&logoColor=white)
+![JPA](https://img.shields.io/badge/JPA-00555?style=flat&logo=jpa&logoColor=white)
 
+###### 프론트
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![javascript](https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=javascript&logoColor=white)
+![Thymeleaf](https://img.shields.io/badge/Thymeleaf-005F0F?style=flat&logo=Thymeleaf&logoColor=white)
+![JQUERY](https://img.shields.io/badge/Jquery-0769AD?style=flat&logo=jquery&logoColor=white)
+![bootstrap](https://img.shields.io/badge/bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white)
 
-## 프로젝트 개요
-* #### 프로젝트 주제
-    * 개발 서적을 집중적으로 다루는 오로지 개발자를 위한 도서 쇼핑몰 웹 어플리케이션 토이 프로젝트
-* #### 프로젝트 목표
-    * 프로그래밍 활용 능력을 뽐내기 위한 프로젝트가 아닌 학습한 내용에 대한 체화 및 새로운 학습에 초점을 맞춘다.
-    * **Spring Boot, JPA ,Spring Security**를 주요 기술적 목표로 하며, DB 설계 - 구현 - 배포를 **경험하는 것**을 목표로 한다.
-    * 기존에 학습한 내용외에 프로젝트에 필요한 기술이나 지식들을 추가적으로 학습하며 프로젝트를 진행한다.
+###### DB
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
+![H2](https://img.shields.io/badge/H2-336699?style=flat&logo=H2&logoColor=white)
 
-* #### 사용 기술
-    * ###### 백엔드
-      ![Spring-Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white)
-      ![SpringSecurity](https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=SpringSecurity&logoColor=white)
-      ![JWT](https://img.shields.io/badge/JWT-665544?style=flat-square&logo=jpa&logoColor=white)
-      ![OAUTH2](https://img.shields.io/badge/OAUTH2-335581?style=flat-square&logo=jpa&logoColor=white)
-      ![JPA](https://img.shields.io/badge/JPA-00555?style=flat-square&logo=jpa&logoColor=white)
+###### CI/CD 및 배포
+![github_actions](https://img.shields.io/badge/github_actions-2088FF?style=flat&logo=githubactions&logoColor=white)
+![AWS EBS](https://img.shields.io/badge/aws_ElasticBeanstalk-d66414?style=flat&logo=AmazonAWS&logoColor=white)
+![AWS EC2](https://img.shields.io/badge/Amazon_ec2-FF9900?style=flat&logo=amazonec2&logoColor=white)
+![AWS RDS](https://img.shields.io/badge/Amazon_RDS-527FFF?style=flat&logo=amazonrds&logoColor=white)
+![AWS S3](https://img.shields.io/badge/Amazon_S3-569A31?style=flat&logo=amazons3&logoColor=white)
 
-    * ###### 프론트
-      ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white)
-      ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
-      ![javascript](https://img.shields.io/badge/Javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=white)
-      ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-005F0F?style=flat-square&logo=Thymeleaf&logoColor=white)
-      ![JQUERY](https://img.shields.io/badge/Jquery-0769AD?style=flat-square&logo=jquery&logoColor=white)
-      ![bootstrap](https://img.shields.io/badge/bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white)
+######  상세
+     - Java: 17
+     - IDE: IntelliJ IDEA
+     - Spring Boot: 3.0.11
+     - Build : Gradle
 
-    * ###### DB
-      ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
-      ![H2](https://img.shields.io/badge/H2-336699?style=flat-square&logo=H2&logoColor=white)
+## 모델링
+#### DB
+  <img width=650 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/46175d09-81f0-4d01-b046-1554deaf042a style="margin-left: 40px">
 
-    * ###### CI/CD 및 배포
-      ![github_actions](https://img.shields.io/badge/github_actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
-      ![AWS EBS](https://img.shields.io/badge/aws_ElasticBeanstalk-d66414?style=flat-square&logo=AmazonAWS&logoColor=white)
-      ![AWS EC2](https://img.shields.io/badge/Amazon_ec2-FF9900?style=flat-square&logo=amazonec2&logoColor=white)
-      ![AWS RDS](https://img.shields.io/badge/Amazon_RDS-527FFF?style=flat-square&logo=amazonrds&logoColor=white)
-      ![AWS S3](https://img.shields.io/badge/Amazon_S3-569A31?style=flat-square&logo=amazons3&logoColor=white)
+#### ENTITY
+  <img width=650 src= https://github.com/goodchoi/Spring-Infbook/assets/105799662/614b5053-2f82-4e9e-ac30-8dea42304234>
 
-    * ######  상세
-        + Java: 17
-        + IDE: IntelliJ IDEA
-        + Spring Boot: 3.0.11
-        + Build : Gradle
-
-* #### DB MODEL
-  <img width=800 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/46175d09-81f0-4d01-b046-1554deaf042a style="margin-left: 40px">
-
-* #### ENTITY MODEL
-  <img width=800 src= https://github.com/goodchoi/Spring-Infbook/assets/105799662/614b5053-2f82-4e9e-ac30-8dea42304234>
-
-##  프로젝트 상세 화면
+##  프로젝트 주요 동작
 
 
 |                                                                                                                                                                        |                                                                                                                                                                       |
