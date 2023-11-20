@@ -51,6 +51,10 @@
 #### ENTITY
   <img width=650 src= https://github.com/goodchoi/Spring-Infbook/assets/105799662/614b5053-2f82-4e9e-ac30-8dea42304234>
 
+#### 서버 아키텍처
+ <img width = 650 src =https://github.com/goodchoi/Spring-Infbook/assets/105799662/7318d2da-03f9-4146-ba1e-4fbf7897b89d>
+
+
 ##  프로젝트 주요 동작
 
 
