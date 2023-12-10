@@ -2,9 +2,9 @@
 <img width=240 src = https://github.com/goodchoi/Spring-Infbook/assets/105799662/4f01c1b1-ae38-4df4-b0bc-e09a187a9321>
 
 
-+ 프로젝트 배포 URL : http://last-env-1.eba-pmmwigfd.ap-northeast-2.elasticbeanstalk.com/ (2023/10/03 ~ 현재 배포 중)
++ ~~프로젝트 배포 URL : http://last-env-1.eba-pmmwigfd.ap-northeast-2.elasticbeanstalk.com/ (2023/10/03 ~ 2023/12/10)~~
 
-> 임시 사용자 ID : test1234 , PW : abcd1234!  
+> ~~임시 사용자 ID : test1234 , PW : abcd1234!~~  
 
 ## 프로젝트 주제
 개발 서적을 집중적으로 다루는 오로지 개발자를 위한 도서 쇼핑몰 웹 어플리케이션을 구현한 토이 프로젝트입니다. `Spring`,`JPA` ,`Spring Security`
